@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 def my_each(arr)
-  0.upto(arr.length - 1) do |each|
-    yield arr[each]
+  0.upto(arr.length - 1) do |index|
+    yield arr[index]
   end
 end
 
-my_each([1, 2, 3, 4, 5]) { |num| print num, " "}
+my_each([1, 2, 3, 4, 5]) { |num| print num, ' ' }
