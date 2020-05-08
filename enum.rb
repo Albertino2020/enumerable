@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
-def my_each(arr)
-  0.upto(arr.length - 1) do |index|
-    yield arr[index]
+module Enumerable
+  def my_each
+    0.upto(self.length - 1) do |index|
+      yield self[index]
+    end
   end
 end
 
-my_each([1, 2, 3, 4, 5]) { |num| print num, ' ' }
+print [1, 2, 3, 4, 5].my_each { |num| puts num * 2 }
