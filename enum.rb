@@ -101,6 +101,21 @@ module Enumerable
   # *********************************
   # End of my_count method.
   # *********************************
+  # *********************************
+  # Beginning of my_map method.
+  # *********************************
+  def my_map
+    mapped = []
+    to_enum :my_map unless block_given?
+    0.upto(length - 1) do |index|
+      mapped.push(yield self[index])
+    end
+    mapped
+  end
+
+  # *********************************
+  # End of my_map method.
+  # *********************************
 end
 
 # *********************************
@@ -149,3 +164,8 @@ print([1, 2, 3, 4, 5].my_none? { |num| num < 10 })
 print([1, 2, 3, 4, 5].my_count { |num| num < 3 })
 print([1, 2, 3, 4, 5].my_count { |num| num < 10 })
 print([2, 1, 2, 3, 4, 2, 5].my_count(2))
+# *********************************
+# Running my_map method test.
+# *********************************
+print([1, 2, 3, 4, 5].my_map { |num| num < 3 })
+print([1, 2, 3, 4, 5].my_map { |num| num * 2 })
