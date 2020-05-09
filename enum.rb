@@ -37,7 +37,9 @@ end
 # *********************************
 # Running my_each method test.
 # *********************************
-print([1, 2, 3, 4, 5].my_each { |num| puts num * 2 })
+arr = []
+[1, 2, 3, 4, 5].my_each { |num| arr.push(num * 2) }
+print arr
 
 # ***************************************
 # Running my_each_with_index method test.
