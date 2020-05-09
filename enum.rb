@@ -72,7 +72,18 @@ module Enumerable
   end
 
   # *********************************
-  # End of my_any method.
+  # End of my_none method.
+  # *********************************
+  def my_none?
+    temp = true
+    0.upto(length - 1) do |index|
+      temp &&= !yield(self[index])
+    end
+    temp
+  end
+
+  # *********************************
+  # End of my_none method.
   # *********************************
 end
 
@@ -110,3 +121,9 @@ print([1, 2, 3, 4, 5].my_any { |num| num < 1 })
 print([1, 2, 3, 4, 5].my_any { |num| num > 10 })
 print([].my_any { |num| num < 1 })
 print([1, 2, 3, 4, 5].my_any { |num| num < 10 })
+# Running my_none method test.
+# *********************************
+print([1, 2, 3, 4, 5].my_none? { |num| num < 1 })
+print([1, 2, 3, 4, 5].my_none? { |num| num > 10 })
+print([].my_none? { |num| num < 1 })
+print([1, 2, 3, 4, 5].my_none? { |num| num < 10 })
