@@ -72,7 +72,7 @@ module Enumerable
   end
 
   # *********************************
-  # End of my_none method.
+  # End of my_none? method.
   # *********************************
   def my_none?
     temp = true
@@ -83,7 +83,23 @@ module Enumerable
   end
 
   # *********************************
-  # End of my_none method.
+  # End of my_none? method.
+  # *********************************
+  # *********************************
+  # End of my_count method.
+  # *********************************
+  def my_count(arg = 0)
+    temp = 0
+    return temp += (my_select { |x| x == arg }).length unless block_given?
+
+    0.upto(length - 1) do |index|
+      temp += 1 if yield(self[index])
+    end
+    temp
+  end
+
+  # *********************************
+  # End of my_count method.
   # *********************************
 end
 
@@ -127,3 +143,9 @@ print([1, 2, 3, 4, 5].my_none? { |num| num < 1 })
 print([1, 2, 3, 4, 5].my_none? { |num| num > 10 })
 print([].my_none? { |num| num < 1 })
 print([1, 2, 3, 4, 5].my_none? { |num| num < 10 })
+# *********************************
+# Running my_count method test.
+# *********************************
+print([1, 2, 3, 4, 5].my_count { |num| num < 3 })
+print([1, 2, 3, 4, 5].my_count { |num| num < 10 })
+print([2, 1, 2, 3, 4, 2, 5].my_count(2))
