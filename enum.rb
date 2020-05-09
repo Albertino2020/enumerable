@@ -45,6 +45,21 @@ module Enumerable
   # *********************************
   # End of my_select method.
   # *********************************
+  # *********************************
+  # Beginning of my_all method.
+  # *********************************
+  def my_all
+    temp = true
+    nil unless block_given?
+    0.upto(length - 1) do |index|
+      temp &&= yield(self[index])
+    end
+    temp
+  end
+
+  # *********************************
+  # End of my_all method.
+  # *********************************
 end
 
 # *********************************
@@ -68,4 +83,9 @@ print hash
 # *********************************
 # Running my_select method test.
 # *********************************
-print ([1, 2, 3, 4, 5].my_select { |num| num.even? })
+print [1, 2, 3, 4, 5].my_select(&:even?)
+# *********************************
+# Running my_all method test.
+# *********************************
+print([1, 2, 3, 4, 5].my_all { |num| num < 3 })
+print([1, 2, 3, 4, 5].my_all { |num| num < 10 })
