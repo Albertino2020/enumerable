@@ -8,8 +8,8 @@ module Enumerable
   end
 
   def my_each_with_index
-    0.upto(length - 1) do |item, index|
-      yield self[item], item
+    0.upto(length - 1) do |index|
+      yield self[index], index
     end
   end
 end
