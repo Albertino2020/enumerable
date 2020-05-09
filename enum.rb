@@ -29,6 +29,22 @@ module Enumerable
   # *********************************
   # End of my_each_with_index method.
   # *********************************
+
+  # *********************************
+  # Beginning of my_select method.
+  # *********************************
+  def my_select
+    arr = []
+    to_enum :my_select unless block_given?
+    0.upto(length - 1) do |index|
+      arr.push(self[index]) if yield(self[index])
+    end
+    arr
+  end
+
+  # *********************************
+  # End of my_select method.
+  # *********************************
 end
 
 # *********************************
@@ -49,3 +65,7 @@ hash = {}
   hash[item] = index
 end
 print hash
+# *********************************
+# Running my_select method test.
+# *********************************
+print ([1, 2, 3, 4, 5].my_select { |num| num.even? })
