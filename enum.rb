@@ -60,6 +60,20 @@ module Enumerable
   # *********************************
   # End of my_all method.
   # *********************************
+  # *********************************
+  # Beginning of my_any method.
+  # *********************************
+  def my_any
+    temp = false
+    0.upto(length - 1) do |index|
+      temp ||= yield(self[index])
+    end
+    temp
+  end
+
+  # *********************************
+  # End of my_any method.
+  # *********************************
 end
 
 # *********************************
@@ -89,3 +103,10 @@ print [1, 2, 3, 4, 5].my_select(&:even?)
 # *********************************
 print([1, 2, 3, 4, 5].my_all { |num| num < 3 })
 print([1, 2, 3, 4, 5].my_all { |num| num < 10 })
+# *********************************
+# Running my_any method test.
+# *********************************
+print([1, 2, 3, 4, 5].my_any { |num| num < 1 })
+print([1, 2, 3, 4, 5].my_any { |num| num > 10 })
+print([].my_any { |num| num < 1 })
+print([1, 2, 3, 4, 5].my_any { |num| num < 10 })
