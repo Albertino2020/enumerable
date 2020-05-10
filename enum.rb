@@ -159,6 +159,7 @@ module Enumerable
   # *********************************
   # End of my_inject method.
   # *********************************
+
 end
 
 # *********************************
@@ -224,8 +225,24 @@ print([1, 2, 3, 4, 5].my_map { |num| num * 2 })
 print([1, 2, 3, 4, 5].my_map)
 
 # *********************************
-# Running my_map method test.
+# Running my_inject method test.
 # *********************************
 print([1, 2, 3, 4, 5].my_inject(2, :+))
 print([1, 2, 3, 4, 5].my_inject { |accumulator, num| accumulator * num })
 print([1, 2, 3, 4, 5].my_inject)
+
+# *********************************
+# Running multiply_els method test.
+# *********************************
+
+# *********************************
+# Beginning of multiply_els method.
+# *********************************
+def multiply_els(arr)
+  arr.my_inject(1, :*)
+end
+
+# *********************************
+# End of multiply_els method.
+# *********************************
+print multiply_els([2, 4, 5])
