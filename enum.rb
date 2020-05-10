@@ -148,6 +148,26 @@ module Enumerable
   # *********************************
 
   # *********************************
+  # Beginning of my_map_pb method
+  # *********************************
+  # rubocop:disable Metrics/AbcSize
+  def my_map_pb(proc = nil)
+    mapped = []
+    return to_enum :my_map_pb unless proc.is_a?(Proc) || block_given?
+
+    0.upto(length - 1) do |index|
+      mapped.push(proc.call(self[index])) if proc.is_a?(Proc)
+      mapped.push(yield self[index]) if block_given? && !proc.is_a?(Proc)
+    end
+    mapped
+  end
+
+  # rubocop:enable Metrics/AbcSize
+  # *********************************
+  # End of my_map_pb method.
+  # *********************************
+
+  # *********************************
   # Beginning of my_inject method.
   # *********************************
   # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize, Metrics/MethodLength
@@ -266,8 +286,16 @@ print multiply_els([2, 4, 5])
 # *********************************
 # Running my_map_proc method.
 # *********************************
-def proc(n)
-  Proc.new { |x| x**n }
+def procs(exp)
+  proc { |x| x**exp }
 end
-test = proc(2)
+
+test = procs(2)
 print [2, 4, 5].my_map_proc(test)
+
+# *********************************
+# Running my_map_pb method.
+# *********************************
+print [2, 4, 5].my_map_pb(test)
+print [2, 4, 5].my_map_pb(test) { |num| num < 3}
+print([2, 4, 5].my_map_pb { |num| num < 3 })
