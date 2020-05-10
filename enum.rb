@@ -133,12 +133,27 @@ module Enumerable
   # *********************************
   # Beginning of my_inject method.
   # *********************************
-  def my_inject(init = 0,:symb)
-    accumulator = init
-    0.upto(length - 1) do |index|
-      accumulator :symb= self[index] unless block_given?
-      yield accumulator, self[index]
+  def my_inject(*args)
+    args.to_a
+    input_arr = is_a?(Array) ? self : to_a
+    input_arr.unshift(args[0]) if args[0].is_a?(Integer)
+    if block_given? && !args[0].is_a?(Integer)
+      input_arr.unshift(yield(input_arr[0], input_arr[0]))
     end
+    accumulator = input_arr[0]
+    @operator = args[1] if args[1].is_a?(Symbol) || args[1].is_a?(String)
+    @operator = args[0] if args[0].is_a?(Symbol) || args[0].is_a?(String)
+
+    1.upto(length - 1) do |index|
+      if block_given?
+        accumulator = yield(accumulator, input_arr[index])
+      elsif !@operator.nil?
+        accumulator = input_arr[index].send(@operator, accumulator)
+      else
+        return nil
+      end
+    end
+    puts('Please enter arguments or a block') if accumulator == input_arr[0]
     accumulator
   end
 
@@ -213,5 +228,5 @@ print([1, 2, 3, 4, 5].my_map)
 # Running my_map method test.
 # *********************************
 print([1, 2, 3, 4, 5].my_inject(2, :+))
-print([1, 2, 3, 4, 5].my_inject { |num| num * 2 })
+print([1, 2, 3, 4, 5].my_inject { |accumulator, num| accumulator * num })
 print([1, 2, 3, 4, 5].my_inject)
