@@ -131,6 +131,23 @@ module Enumerable
   # *********************************
 
   # *********************************
+  # Beginning of my_map with proc method.
+  # *********************************
+  def my_map_proc(proc)
+    mapped = []
+    return to_enum :my_map_proc unless proc.is_a?(Proc)
+
+    0.upto(length - 1) do |index|
+      mapped.push(proc.call(self[index]))
+    end
+    mapped
+  end
+
+  # *********************************
+  # End of my_map with proc method.
+  # *********************************
+
+  # *********************************
   # Beginning of my_inject method.
   # *********************************
   # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize, Metrics/MethodLength
@@ -151,7 +168,7 @@ module Enumerable
       end
     end
     accumulator = yield(accumulator, input_arr[0]) if block_given?
-    puts("Please enter arguments or a block") if accumulator == input_arr[0]
+    puts('Please enter arguments or a block') if accumulator == input_arr[0]
     accumulator
   end
 
@@ -159,7 +176,6 @@ module Enumerable
   # *********************************
   # End of my_inject method.
   # *********************************
-
 end
 
 # *********************************
@@ -232,10 +248,6 @@ print([1, 2, 3, 4, 5].my_inject { |accumulator, num| accumulator * num })
 print([1, 2, 3, 4, 5].my_inject)
 
 # *********************************
-# Running multiply_els method test.
-# *********************************
-
-# *********************************
 # Beginning of multiply_els method.
 # *********************************
 def multiply_els(arr)
@@ -245,4 +257,17 @@ end
 # *********************************
 # End of multiply_els method.
 # *********************************
+
+# *********************************
+# Running multiply_els method test.
+# *********************************
 print multiply_els([2, 4, 5])
+
+# *********************************
+# Running my_map_proc method.
+# *********************************
+def proc(n)
+  Proc.new { |x| x**n }
+end
+test = proc(2)
+print [2, 4, 5].my_map_proc(test)
