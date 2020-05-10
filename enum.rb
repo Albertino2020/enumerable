@@ -133,13 +133,10 @@ module Enumerable
   # *********************************
   # Beginning of my_inject method.
   # *********************************
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize, Metrics/MethodLength
   def my_inject(*args)
-    args.to_a
     input_arr = is_a?(Array) ? self : to_a
     input_arr.unshift(args[0]) if args[0].is_a?(Integer)
-    if block_given? && !args[0].is_a?(Integer)
-      input_arr.unshift(yield(input_arr[0], input_arr[0]))
-    end
     accumulator = input_arr[0]
     @operator = args[1] if args[1].is_a?(Symbol) || args[1].is_a?(String)
     @operator = args[0] if args[0].is_a?(Symbol) || args[0].is_a?(String)
@@ -153,10 +150,12 @@ module Enumerable
         return nil
       end
     end
-    puts('Please enter arguments or a block') if accumulator == input_arr[0]
+    accumulator = yield(accumulator, input_arr[0]) if block_given?
+    puts("Please enter arguments or a block") if accumulator == input_arr[0]
     accumulator
   end
 
+  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity,  Metrics/AbcSize, Metrics/MethodLength
   # *********************************
   # End of my_inject method.
   # *********************************
