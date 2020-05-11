@@ -1,18 +1,34 @@
 # frozen_string_literal: true
 
 #:nodoc:
+# rubocop: disable Metrics/ModuleLength
 module Enumerable
   # *********************************
   # Beginning of my_each method.
   # *********************************
-  def my_each
-    return to_enum :my_each unless block_given?
-
-    0.upto(length - 1) do |index|
-      yield self[index]
+  def my_each(nums = 0)
+    checked = []
+    num = nums.is_a?(Integer) && nums >= 1 ? nums : 0
+    unless block_given?
+      (return to_enum :my_each, (puts '=>', 'No block was given', "\n"))
     end
+    (return nil, puts('=>', 'Array is empty', "\n")) if empty?
+
+    0.upto(length - num) do |index|
+      if num.is_a?(Integer) && num >= 1
+        aux = []
+        index.upto(index + num - 1) do |i|
+          aux.push(yield self[i])
+        end
+        print aux, "\n" unless aux.empty?
+      else
+        checked.push(yield self[index]) unless self[index].nil?
+      end
+    end
+    print checked unless checked.empty?
   end
 
+  # rubocop:enable
   # *********************************
   # End of my_each method.
   # *********************************
@@ -170,7 +186,7 @@ module Enumerable
   # *********************************
   # Beginning of my_inject method.
   # *********************************
-  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def my_inject(*args)
     input_arr = is_a?(Array) ? self : to_a
     input_arr.unshift(args[0]) if args[0].is_a?(Integer)
@@ -192,11 +208,13 @@ module Enumerable
     accumulator
   end
 
-  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity,  Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:enable, Metrics/AbcSize, Metrics/MethodLength
   # *********************************
   # End of my_inject method.
   # *********************************
 end
+
+# rubocop:enable Metrics/ModuleLength
 
 # *********************************
 # RUNNING TESTS BELOW
@@ -205,9 +223,19 @@ end
 # *********************************
 # Running my_each method test.
 # *********************************
+print 'Running my_each method test:', "\n", "\n"
 arr = []
-[1, 2, 3, 4, 5].my_each { |num| arr.push(num * 2) }
-print 'my_each: ', "\n", arr, "\n"
+print 'arr = []', "\n", "\n"
+print 'arr.my_each(0) { |num| num * 2 }', "\n", "\n"
+arr.my_each(0) { |num| num * 2 }
+print 'arr.my_each(3)', "\n", "\n"
+arr.my_each(3)
+print '[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].my_each (3) { |num| arr.push(num * 2) }', "\n", "\n"
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].my_each(3) { |num| num * 2 }
+print "\n", "\n"
+print '[1, 2, 3, 4, 5].my_each { |num| num * 2 }', "\n", "\n"
+[1, 2, 3, 4, 5].my_each { |num| num * 2 }
+print "\n", "\n"
 # ***************************************
 # Running my_each_with_index method test.
 # ***************************************
