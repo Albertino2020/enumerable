@@ -207,8 +207,7 @@ end
 # *********************************
 arr = []
 [1, 2, 3, 4, 5].my_each { |num| arr.push(num * 2) }
-print arr
-
+print 'my_each: ', "\n", arr, "\n"
 # ***************************************
 # Running my_each_with_index method test.
 # ***************************************
@@ -217,55 +216,61 @@ hash = {}
 %w[cat dog wombat].my_each_with_index do |item, index|
   hash[item] = index
 end
-print hash
+print 'my_each_with_index: ', "\n", hash, "\n"
 
 # *********************************
 # Running my_select method test.
 # *********************************
-print [1, 2, 3, 4, 5].my_select(&:even?)
+print 'my_select: ', "\n", [1, 2, 3, 4, 5].my_select(&:even?), "\n"
 
 # *********************************
 # Running my_all method test.
 # *********************************
-print([1, 2, 3, 4, 5].my_all { |num| num < 3 })
-print([1, 2, 3, 4, 5].my_all { |num| num < 10 })
+print 'my_all:', "\n"
+print([1, 2, 3, 4, 5].my_all { |num| num < 3 }, "\n")
+print([1, 2, 3, 4, 5].my_all { |num| num < 10 }, "\n")
 
 # *********************************
 # Running my_any method test.
 # *********************************
-print([1, 2, 3, 4, 5].my_any { |num| num < 1 })
-print([1, 2, 3, 4, 5].my_any { |num| num > 10 })
-print([].my_any { |num| num < 1 })
-print([1, 2, 3, 4, 5].my_any { |num| num < 10 })
+print 'my_any:', "\n"
+print([1, 2, 3, 4, 5].my_any { |num| num < 1 }, "\n")
+print([1, 2, 3, 4, 5].my_any { |num| num > 10 }, "\n")
+print([].my_any { |num| num < 1 }, "\n")
+print([1, 2, 3, 4, 5].my_any { |num| num < 10 }, "\n")
 
 # *********************************
 # Running my_none method test.
 # *********************************
-print([1, 2, 3, 4, 5].my_none? { |num| num < 1 })
-print([1, 2, 3, 4, 5].my_none? { |num| num > 10 })
-print([].my_none? { |num| num < 1 })
-print([1, 2, 3, 4, 5].my_none? { |num| num < 10 })
+print 'my_none:', "\n"
+print([1, 2, 3, 4, 5].my_none? { |num| num < 1 }, "\n")
+print([1, 2, 3, 4, 5].my_none? { |num| num > 10 }, "\n")
+print([].my_none? { |num| num < 1 }, "\n")
+print([1, 2, 3, 4, 5].my_none? { |num| num < 10 }, "\n")
 
 # *********************************
 # Running my_count method test.
 # *********************************
-print([1, 2, 3, 4, 5].my_count { |num| num < 3 })
-print([1, 2, 3, 4, 5].my_count { |num| num < 10 })
-print([2, 1, 2, 3, 4, 2, 5].my_count(2))
+print 'my_count:', "\n"
+print([1, 2, 3, 4, 5].my_count { |num| num < 3 }, "\n")
+print([1, 2, 3, 4, 5].my_count { |num| num < 10 }, "\n")
+print([2, 1, 2, 3, 4, 2, 5].my_count(2), "\n")
 
 # *********************************
 # Running my_map method test.
 # *********************************
-print([1, 2, 3, 4, 5].my_map { |num| num < 3 })
-print([1, 2, 3, 4, 5].my_map { |num| num * 2 })
-print([1, 2, 3, 4, 5].my_map)
+print 'my_map:', "\n"
+print([1, 2, 3, 4, 5].my_map { |num| num < 3 }, "\n")
+print([1, 2, 3, 4, 5].my_map { |num| num * 2 }, "\n")
+print([1, 2, 3, 4, 5].my_map, "\n")
 
 # *********************************
 # Running my_inject method test.
 # *********************************
-print([1, 2, 3, 4, 5].my_inject(2, :+))
-print([1, 2, 3, 4, 5].my_inject { |accumulator, num| accumulator * num })
-print([1, 2, 3, 4, 5].my_inject)
+print 'my_inject: The most difficult method I did :-)', "\n"
+print([1, 2, 3, 4, 5].my_inject(2, :+), "\n")
+print([1, 2, 3, 4, 5].my_inject { |accumulator, num| accumulator * num }, "\n")
+print([1, 2, 3, 4, 5].my_inject, "\n")
 
 # *********************************
 # Beginning of multiply_els method.
@@ -281,21 +286,24 @@ end
 # *********************************
 # Running multiply_els method test.
 # *********************************
-print multiply_els([2, 4, 5])
+print 'multiply_els: multiply elements of an array', "\n"
+print multiply_els([2, 4, 5]), "\n"
 
 # *********************************
 # Running my_map_proc method.
 # *********************************
+print 'my_map_proc: Accepts procs', "\n"
 def procs(exp)
   proc { |x| x**exp }
 end
 
 test = procs(2)
-print [2, 4, 5].my_map_proc(test)
+print [2, 4, 5].my_map_proc(test), "\n"
 
 # *********************************
 # Running my_map_pb method.
 # *********************************
-print [2, 4, 5].my_map_pb(test)
-print [2, 4, 5].my_map_pb(test) { |num| num < 3}
-print([2, 4, 5].my_map_pb { |num| num < 3 })
+print 'my_map_pb: Accepts both procs and blocs:', "\n"
+print [2, 4, 5].my_map_pb(test), "\n"
+print [2, 4, 5].my_map_pb(test) { |num| num < 3 }, "\n"
+print([2, 4, 5].my_map_pb { |num| num < 3 }, "\n")
