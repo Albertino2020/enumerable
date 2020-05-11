@@ -75,7 +75,7 @@ module Enumerable
     else
       print "=> ", "Array is empty.", "\n", "\n"
     end
-       print( "=> ", arr, "\n", "\n" )unless arr.empty?
+       print( "=> ", arr, "\n", "\n" ) unless arr.empty?
   end
 
   # *********************************
@@ -85,12 +85,14 @@ module Enumerable
   # *********************************
   # Beginning of my_all method.
   # *********************************
-  def my_all
+  def my_all?(arg = nil)
     temp = true
-    return nil unless block_given?
-
     0.upto(length - 1) do |index|
+      if block_given?
       temp &&= yield(self[index])
+      else
+        temp &&= (arg === self[index]) 
+      end
     end
     temp
   end
@@ -290,11 +292,19 @@ print "[].my_select(&:even?)", "\n", "\n"
 [].my_select(&:even?)
 
 # *********************************
-# Running my_all method tests.
+# Running my_all? method tests.
 # *********************************
-print "my_all:", "\n"
-print([1, 2, 3, 4, 5].my_all { |num| num < 3 }, "\n")
-print([1, 2, 3, 4, 5].my_all { |num| num < 10 }, "\n")
+print "Running my_all? tests:", "\n", "\n"
+print "[1, 2, 3, 4, 5].my_all? { |num| num < 3 }", "\n", "\n"
+print([1, 2, 3, 4, 5].my_all? { |num| num < 3 }, "\n", "\n")
+print "[1, 2, 3, 4, 5].my_all? { |num| num < 10 }", "\n", "\n"
+print([1, 2, 3, 4, 5].my_all? { |num| num < 10 }, "\n", "\n")
+print "[1, 2, 3, 4, 5].my_all?", "\n", "\n"
+print([1, 2, 3, 4, 5].my_all?, "\n", "\n")
+print "[1, 2, 3, 4, 5].my_all?(Numeric)", "\n", "\n"
+print([1, 2, 3, 4, 5].my_all?(Numeric), "\n", "\n")
+print "[].my_all?", "\n", "\n"
+print([].my_all?, "\n", "\n")
 
 # *********************************
 # Running my_any method test.
