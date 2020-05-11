@@ -104,10 +104,14 @@ module Enumerable
   # *********************************
   # Beginning of my_any method.
   # *********************************
-  def my_any
+  def my_any?(arg = nil)
     temp = false
     0.upto(length - 1) do |index|
+      if block_given?
       temp ||= yield(self[index])
+      else
+        temp ||= (arg === self[index])
+      end
     end
     temp
   end
@@ -309,11 +313,19 @@ print([].my_all?, "\n", "\n")
 # *********************************
 # Running my_any method test.
 # *********************************
-print "my_any:", "\n"
-print([1, 2, 3, 4, 5].my_any { |num| num < 1 }, "\n")
-print([1, 2, 3, 4, 5].my_any { |num| num > 10 }, "\n")
-print([].my_any { |num| num < 1 }, "\n")
-print([1, 2, 3, 4, 5].my_any { |num| num < 10 }, "\n")
+print "Running my_any? method test", "\n", "\n"
+print("[1, 2, 3, 4, 5].my_any? { |num| num < 1 }", "\n", "\n")
+print([1, 2, 3, 4, 5].my_any? { |num| num < 1 }, "\n", "\n")
+print("[1, 2, 3, 4, 5].my_any? { |num| num > 10 }", "\n", "\n")
+print([1, 2, 3, 4, 5].my_any? { |num| num > 10 }, "\n", "\n")
+print("[].my_any? { |num| num < 1 }", "\n", "\n")
+print([].my_any? { |num| num < 1 }, "\n", "\n")
+print("[1, 2, 3, 4, 5].my_any? { |num| num < 10 }", "\n", "\n")
+print([1, 2, 3, 4, 5].my_any? { |num| num < 10 }, "\n", "\n")
+print("[].my_any?", "\n", "\n")
+print([].my_any?, "\n", "\n")
+print("[1, 2, 3, 4, 5].my_any?(Integer)", "\n", "\n")
+print([1, 2, 3, 4, 5].my_any?(Integer), "\n", "\n")
 
 # *********************************
 # Running my_none method test.
