@@ -10,9 +10,9 @@ module Enumerable
     checked = []
     num = nums.is_a?(Integer) && nums >= 1 ? nums : 0
     unless block_given?
-      (return to_enum :my_each, (puts '=>', 'No block was given', "\n"))
+      (return to_enum :my_each, (puts "=>", "No block was given", "\n"))
     end
-    (return nil, puts('=>', 'Array is empty', "\n")) if empty?
+    (return nil, puts("=>", "Array is empty", "\n")) if empty?
 
     0.upto(length - num) do |index|
       if num.is_a?(Integer) && num >= 1
@@ -36,19 +36,13 @@ module Enumerable
   # *********************************
   # Beginning of my_each_with_index method.
   # *********************************
-  # def my_each_with_index
-  #   return to_enum :my_each_with_index unless block_given?
-  #   0.upto(length - 1) do |index|
-  #     yield self[index], index
-  #   end
-  # end
   def my_each_with_index(nums = 0)
     checked = {}
     num = nums.is_a?(Integer) && nums >= 1 ? nums : 0
     unless block_given?
-      (return to_enum :my_each_with_index, (puts '=>', 'No block was given', "\n"))
+      (return to_enum :my_each_with_index, (puts "=>", "No block was given", "\n"))
     end
-    (return nil, puts('=>', 'Array is empty', "\n")) if empty?
+    (return nil, puts("=>", "Array is empty", "\n")) if empty?
 
     0.upto(length - num) do |index|
       if num.is_a?(Integer) && num >= 1
@@ -73,12 +67,15 @@ module Enumerable
   # *********************************
   def my_select
     arr = []
-    return to_enum :my_select unless block_given?
-
-    0.upto(length - 1) do |index|
-      arr.push(self[index]) if yield(self[index])
+    return to_enum :my_select, print("No block was given.", "\n", "\n") unless block_given?
+    if !self.empty?
+      0.upto(length - 1) do |index|
+        arr.push(self[index]) if yield(self[index])
+      end
+    else
+      print "=> ", "Array is empty.", "\n", "\n"
     end
-    arr
+       print( "=> ", arr, "\n", "\n" )unless arr.empty?
   end
 
   # *********************************
@@ -224,7 +221,7 @@ module Enumerable
       end
     end
     accumulator = yield(accumulator, input_arr[0]) if block_given?
-    puts('Please enter arguments or a block') if accumulator == input_arr[0]
+    puts("Please enter arguments or a block") if accumulator == input_arr[0]
     accumulator
   end
 
@@ -241,25 +238,25 @@ end
 # *********************************
 
 # *********************************
-# Running my_each method test.
+# Running my_each method tests.
 # *********************************
-print 'Running my_each method test:', "\n", "\n"
+print "Running my_each method test:", "\n", "\n"
 arr = []
-print 'arr = []', "\n", "\n"
-print 'arr.my_each(0) { |num| num * 2 }', "\n", "\n"
+print "arr = []", "\n", "\n"
+print "arr.my_each(0) { |num| num * 2 }", "\n", "\n"
 arr.my_each(0) { |num| num * 2 }
-print 'arr.my_each(3)', "\n", "\n"
+print "arr.my_each(3)", "\n", "\n"
 arr.my_each(3)
-print '[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].my_each (3) { |num| arr.push(num * 2) }', "\n", "\n"
+print "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].my_each (3) { |num| arr.push(num * 2) }", "\n", "\n"
 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].my_each(3) { |num| num * 2 }
 print "\n", "\n"
-print '[1, 2, 3, 4, 5].my_each { |num| num * 2 }', "\n", "\n"
+print "[1, 2, 3, 4, 5].my_each { |num| num * 2 }", "\n", "\n"
 [1, 2, 3, 4, 5].my_each { |num| num * 2 }
 print "\n", "\n"
 # ***************************************
-# Running my_each_with_index method test.
+# Running my_each_with_index method tests.
 # ***************************************
-print 'running my_each_with_index tests: ', "\n", "\n"
+print "running my_each_with_index tests: ", "\n", "\n"
 print "hash = {}
 %w[cat dog wombat].my_each_with_index (2) do |item, index|
   hash[item] = index
@@ -280,21 +277,29 @@ end
 print "\n", "\n"
 
 # *********************************
-# Running my_select method test.
+# Running my_select method tests.
 # *********************************
-print 'my_select: ', "\n", [1, 2, 3, 4, 5].my_select(&:even?), "\n"
+print "Running my_select:method tests ", "\n", "\n"
+
+print "[1, 2, 3, 4, 5].my_select(&:even?)", "\n", "\n"
+
+print ([1, 2, 3, 4, 5].my_select(&:even?))
+print "[1, 2, 3, 4, 5].my_select", "\n", "\n"
+[1, 2, 3, 4, 5].my_select
+print "[].my_select(&:even?)", "\n", "\n"
+[].my_select(&:even?)
 
 # *********************************
-# Running my_all method test.
+# Running my_all method tests.
 # *********************************
-print 'my_all:', "\n"
+print "my_all:", "\n"
 print([1, 2, 3, 4, 5].my_all { |num| num < 3 }, "\n")
 print([1, 2, 3, 4, 5].my_all { |num| num < 10 }, "\n")
 
 # *********************************
 # Running my_any method test.
 # *********************************
-print 'my_any:', "\n"
+print "my_any:", "\n"
 print([1, 2, 3, 4, 5].my_any { |num| num < 1 }, "\n")
 print([1, 2, 3, 4, 5].my_any { |num| num > 10 }, "\n")
 print([].my_any { |num| num < 1 }, "\n")
@@ -303,7 +308,7 @@ print([1, 2, 3, 4, 5].my_any { |num| num < 10 }, "\n")
 # *********************************
 # Running my_none method test.
 # *********************************
-print 'my_none:', "\n"
+print "my_none:", "\n"
 print([1, 2, 3, 4, 5].my_none? { |num| num < 1 }, "\n")
 print([1, 2, 3, 4, 5].my_none? { |num| num > 10 }, "\n")
 print([].my_none? { |num| num < 1 }, "\n")
@@ -312,7 +317,7 @@ print([1, 2, 3, 4, 5].my_none? { |num| num < 10 }, "\n")
 # *********************************
 # Running my_count method test.
 # *********************************
-print 'my_count:', "\n"
+print "my_count:", "\n"
 print([1, 2, 3, 4, 5].my_count { |num| num < 3 }, "\n")
 print([1, 2, 3, 4, 5].my_count { |num| num < 10 }, "\n")
 print([2, 1, 2, 3, 4, 2, 5].my_count(2), "\n")
@@ -320,7 +325,7 @@ print([2, 1, 2, 3, 4, 2, 5].my_count(2), "\n")
 # *********************************
 # Running my_map method test.
 # *********************************
-print 'my_map:', "\n"
+print "my_map:", "\n"
 print([1, 2, 3, 4, 5].my_map { |num| num < 3 }, "\n")
 print([1, 2, 3, 4, 5].my_map { |num| num * 2 }, "\n")
 print([1, 2, 3, 4, 5].my_map, "\n")
@@ -328,7 +333,7 @@ print([1, 2, 3, 4, 5].my_map, "\n")
 # *********************************
 # Running my_inject method test.
 # *********************************
-print 'my_inject: The most difficult method I did :-)', "\n"
+print "my_inject: The most difficult method I did :-)", "\n"
 print([1, 2, 3, 4, 5].my_inject(2, :+), "\n")
 print([1, 2, 3, 4, 5].my_inject { |accumulator, num| accumulator * num }, "\n")
 print([1, 2, 3, 4, 5].my_inject, "\n")
@@ -347,16 +352,16 @@ end
 # *********************************
 # Running multiply_els method test.
 # *********************************
-print 'multiply_els: multiply elements of an array', "\n"
+print "multiply_els: multiply elements of an array", "\n"
 print multiply_els([2, 4, 5]), "\n"
 
 # *********************************
 # Running my_map_proc method.
 # *********************************
-print 'my_map_proc: Accepts procs', "\n"
+print "my_map_proc: Accepts procs", "\n"
 
 def procs(exp)
-  proc { |x| x**exp }
+  proc { |x| x ** exp }
 end
 
 test = procs(2)
@@ -365,7 +370,7 @@ print [2, 4, 5].my_map_proc(test), "\n"
 # *********************************
 # Running my_map_pb method.
 # *********************************
-print 'my_map_pb: Accepts both procs and blocs:', "\n"
+print "my_map_pb: Accepts both procs and blocs:", "\n"
 print [2, 4, 5].my_map_pb(test), "\n"
 print [2, 4, 5].my_map_pb(test) { |num| num < 3 }, "\n"
 print([2, 4, 5].my_map_pb { |num| num < 3 }, "\n")
