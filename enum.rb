@@ -36,12 +36,32 @@ module Enumerable
   # *********************************
   # Beginning of my_each_with_index method.
   # *********************************
-  def my_each_with_index
-    return to_enum :my_each_with_index unless block_given?
-
-    0.upto(length - 1) do |index|
-      yield self[index], index
+  # def my_each_with_index
+  #   return to_enum :my_each_with_index unless block_given?
+  #   0.upto(length - 1) do |index|
+  #     yield self[index], index
+  #   end
+  # end
+  def my_each_with_index(nums = 0)
+    checked = {}
+    num = nums.is_a?(Integer) && nums >= 1 ? nums : 0
+    unless block_given?
+      (return to_enum :my_each_with_index, (puts '=>', 'No block was given', "\n"))
     end
+    (return nil, puts('=>', 'Array is empty', "\n")) if empty?
+
+    0.upto(length - num) do |index|
+      if num.is_a?(Integer) && num >= 1
+        aux = {}
+        index.upto(index + num - 1) do |i|
+          aux[self[i]] = yield self[i], i
+        end
+        print aux, "\n" unless aux.empty?
+      else
+        checked[self[index]] = yield self[index], index unless self[index].nil?
+      end
+    end
+    print checked unless checked.empty?
   end
 
   # *********************************
@@ -239,12 +259,25 @@ print "\n", "\n"
 # ***************************************
 # Running my_each_with_index method test.
 # ***************************************
-
+print 'running my_each_with_index tests: ', "\n", "\n"
+print "hash = {}
+%w[cat dog wombat].my_each_with_index (2) do |item, index|
+  hash[item] = index
+end"
+print "\n" "\n"
 hash = {}
+%w[cat dog wombat].my_each_with_index (2) do |item, index|
+  hash[item] = index
+end
+print "\n" "\n"
+print "%w[cat dog wombat].my_each_with_index do |item, index|
+hash[item] = index
+end"
+print "\n" "\n"
 %w[cat dog wombat].my_each_with_index do |item, index|
   hash[item] = index
 end
-print 'my_each_with_index: ', "\n", hash, "\n"
+print "\n", "\n"
 
 # *********************************
 # Running my_select method test.
