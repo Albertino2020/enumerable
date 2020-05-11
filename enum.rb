@@ -293,6 +293,7 @@ print multiply_els([2, 4, 5]), "\n"
 # Running my_map_proc method.
 # *********************************
 print 'my_map_proc: Accepts procs', "\n"
+
 def procs(exp)
   proc { |x| x**exp }
 end

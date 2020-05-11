@@ -1,32 +1,32 @@
-# Project Name
+# Advanced Building Blocks: Enumerable
 
-> One paragraph statement about the project.
+> This is a collection of the Ruby Enumerable-like methods implemented using the Ruby. It corresponds to  my first solo project in the Ruby Course from the Microverse Main Curiiculum
 
 ![screenshot](./app_screenshot.png)
 
-Additional description about the project and its features.
+The project contains descriptions and comments for all methods implemented, as well as for the respective deployment tests.
 
 ## Built With
 
-- Major languages,
-- frameworks,
-- technologies used
+- Ruby
 
 ## Live Demo
 
-[Live Demo Link](https://livedemo.com)
+[Live Demo Link](https://github.com/Albertino2020/enumerable)
 
 
 ## Getting Started
 
-**This is an example of how you may give instructions on setting up your project locally.**
-**Modify this file to match your project, remove sections that don't apply. For example: delete the testing section if the currect project doesn't require testing.**
+1-
 
 
 To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
-
+1 - Install VSC
+2 - Install Ruby
+3 - Download or clone repository from GitHub
+4 - run ruby enum.rb
 ### Setup
 
 ### Install
@@ -39,19 +39,13 @@ To get a local copy up and running follow these simple example steps.
 
 
 
-## Authors
+## Author
 
-👤 **Author1**
+👤 Albertino Francisco
 
-- Github: [@githubhandle](https://github.com/githubhandle)
-- Twitter: [@twitterhandle](https://twitter.com/twitterhandle)
-- Linkedin: [linkedin](https://linkedin.com/linkedinhandle)
-
-👤 **Author2**
-
-- Github: [@githubhandle](https://github.com/githubhandle)
-- Twitter: [@twitterhandle](https://twitter.com/twitterhandle)
-- Linkedin: [linkedin](https://linkedin.com/linkedinhandle)
+- Github: [@Albertino2020](https://github.com/Albertino2020)
+- Twitter: [@albertino2050](https://twitter.com/albertino2050)
+- Linkedin: [Albertino Francisco, PhD](https://linkedin.com/boamorte)
 
 ## 🤝 Contributing
 
@@ -62,12 +56,6 @@ Feel free to check the [issues page](issues/).
 ## Show your support
 
 Give a ⭐️ if you like this project!
-
-## Acknowledgments
-
-- Hat tip to anyone whose code was used
-- Inspiration
-- etc
 
 ## 📝 License
 
