@@ -67,8 +67,11 @@ module Enumerable
   # *********************************
   def my_select
     arr = []
-    return to_enum :my_select, print("No block was given.", "\n", "\n") unless block_given?
-    if !self.empty?
+    unless block_given?
+      return to_enum :my_select, print("No block was given.", "\n", "\n")
+    end
+
+    if !empty?
       0.upto(length - 1) do |index|
         arr.push(self[index]) if yield(self[index])
       end
@@ -76,6 +79,7 @@ module Enumerable
       print "=> ", "Array is empty.", "\n", "\n"
     end
     print("=> ", arr, "\n", "\n") unless arr.empty?
+    arr
   end
 
   # *********************************
@@ -88,11 +92,11 @@ module Enumerable
   def my_all?(arg = nil)
     temp = true
     0.upto(length - 1) do |index|
-      if block_given?
-        temp &&= yield(self[index])
-      else
-        temp &&= (arg === self[index])
-      end
+      temp &&= if block_given?
+          yield(self[index])
+        else
+          (arg === self[index])
+        end
     end
     temp
   end
@@ -107,11 +111,11 @@ module Enumerable
   def my_any?(arg = nil)
     temp = false
     0.upto(length - 1) do |index|
-      if block_given?
-        temp ||= yield(self[index])
-      else
-        temp ||= (arg === self[index])
-      end
+      temp ||= if block_given?
+          yield(self[index])
+        else
+          (arg === self[index])
+        end
     end
     temp
   end
@@ -126,11 +130,11 @@ module Enumerable
   def my_none?(pat = nil)
     temp = true
     0.upto(length - 1) do |index|
-      if block_given?
-        temp &&= !yield(self[index])
-      else
-        temp &&= !(pat === self[index])
-      end
+      temp &&= if block_given?
+          !yield(self[index])
+        else
+          !(pat === self[index])
+        end
     end
     temp
   end
@@ -139,23 +143,26 @@ module Enumerable
   # End of my_none? method.
   # *********************************
 
-  # *********************************
+  # *************************(********
   # Beginning of my_count method.
   # *********************************
-  def my_count(arg = 0)
-    temp = 0
-    return 0 unless !self.empty?
-    0.upto(length - 1) do |index|
-      if block_given?
-        temp += 1 if yield(self[index])
-      elsif !arg.nil?
-        temp += 1 if self[index] == arg
-      else
-        temp += 1
-      end
+  NOTHING = Object.new
+  def my_count(arg = NOTHING)
+    if NOTHING === arg
+     return size
     end
-    temp
+
+    if block_given?
+      count = 0
+      0.upto(length - 1) do |index|
+        count += 1 if yield self[index]
+      end
+      return count
+    else
+      my_select { |index| index == arg }.length
+    end
   end
+
 
   # *********************************
   # End of my_count method.
@@ -321,7 +328,7 @@ print "Running my_select:method tests ", "\n", "\n"
 
 print "[1, 2, 3, 4, 5].my_select(&:even?)", "\n", "\n"
 
-print ([1, 2, 3, 4, 5].my_select(&:even?))
+print [1, 2, 3, 4, 5].my_select(&:even?)
 print "[1, 2, 3, 4, 5].my_select", "\n", "\n"
 [1, 2, 3, 4, 5].my_select
 print "[].my_select(&:even?)", "\n", "\n"
@@ -377,12 +384,17 @@ print("[1, 2, 3, 4, 5].my_none?(Integer)", "\n", "\n")
 print([1, 2, 3, 4, 5].my_none?(Integer), "\n", "\n")
 
 # *********************************
-# Running my_count method test.
+# Running my_count method tests.
 # *********************************
-print "my_count:", "\n"
-print([1, 2, 3, 4, 5].my_count { |num| num < 3 }, "\n")
-print([1, 2, 3, 4, 5].my_count { |num| num < 10 }, "\n")
-print([2, 1, 2, 3, 4, 2, 5].my_count(2), "\n")
+print "running my_count method tests:", "\n", "\n"
+print("[1, 2, 3, 4, 5].my_count { |num| num < 3 }", "\n")
+print([1, 2, 3, 4, 5].my_count { |num| num < 3 }, "\n", "\n")
+print("[1, 2, 3, 4, 5].my_count { |num| num < 10 }", "\n", "\n")
+print([1, 2, 3, 4, 5].my_count { |num| num < 10 }, "\n", "\n")
+print("[2, 1, 2, 3, 4, 2, 5].my_count(2)", "\n", "\n")
+print([2, 1, 2, 3, 4, 2, 5].my_count(2), "\n", "\n")
+print("[2, 1, 2, 3, 4, 2, 5].my_count", "\n", "\n")
+print([2, 1, 2, 3, 4, 2, 5].my_count, "\n", "\n")
 
 # *********************************
 # Running my_map method test.
