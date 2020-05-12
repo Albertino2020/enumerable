@@ -75,7 +75,7 @@ module Enumerable
     else
       print "=> ", "Array is empty.", "\n", "\n"
     end
-       print( "=> ", arr, "\n", "\n" ) unless arr.empty?
+    print("=> ", arr, "\n", "\n") unless arr.empty?
   end
 
   # *********************************
@@ -89,26 +89,26 @@ module Enumerable
     temp = true
     0.upto(length - 1) do |index|
       if block_given?
-      temp &&= yield(self[index])
+        temp &&= yield(self[index])
       else
-        temp &&= (arg === self[index]) 
+        temp &&= (arg === self[index])
       end
     end
     temp
   end
 
   # *********************************
-  # End of my_all method.
+  # End of my_all? method.
   # *********************************
 
   # *********************************
-  # Beginning of my_any method.
+  # Beginning of my_any? method.
   # *********************************
   def my_any?(arg = nil)
     temp = false
     0.upto(length - 1) do |index|
       if block_given?
-      temp ||= yield(self[index])
+        temp ||= yield(self[index])
       else
         temp ||= (arg === self[index])
       end
@@ -117,16 +117,20 @@ module Enumerable
   end
 
   # *********************************
-  # End of my_any method.
+  # End of my_any? method.
   # *********************************
 
   # *********************************
   # Beginning of my_none? method.
   # *********************************
-  def my_none?
+  def my_none?(pat = nil)
     temp = true
     0.upto(length - 1) do |index|
-      temp &&= !yield(self[index])
+      if block_given?
+        temp &&= !yield(self[index])
+      else
+        temp &&= !(pat === self[index])
+      end
     end
     temp
   end
@@ -240,8 +244,31 @@ end
 # rubocop:enable Metrics/ModuleLength
 
 # *********************************
-# RUNNING TESTS BELOW
+# Beginning of multiply_els method.
 # *********************************
+def multiply_els(arr)
+  arr.my_inject(1, :*)
+end
+
+# *********************************
+# End of multiply_els method.
+# *********************************
+
+# XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+# XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#
+# RUNNING TESTS BELOW
+#
+# XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+# XXXXXXXXXXXXXXXXXXXXXXXXXXXX #
+# XXXXXXXXXXXXXXXXXXXXXXXXXX #
+# XXXXXXXXXXXXXXXXXXXXXX #
+# XXXXXXXXXXXXXXXXXX #
+# XXXXXXXXXXXXXX #
+# XXXXXXXXXX #
+# XXXXXX #
+# XX #
+#
 
 # *********************************
 # Running my_each method tests.
@@ -311,7 +338,7 @@ print "[].my_all?", "\n", "\n"
 print([].my_all?, "\n", "\n")
 
 # *********************************
-# Running my_any method test.
+# Running my_any? method test.
 # *********************************
 print "Running my_any? method test", "\n", "\n"
 print("[1, 2, 3, 4, 5].my_any? { |num| num < 1 }", "\n", "\n")
@@ -328,13 +355,22 @@ print("[1, 2, 3, 4, 5].my_any?(Integer)", "\n", "\n")
 print([1, 2, 3, 4, 5].my_any?(Integer), "\n", "\n")
 
 # *********************************
-# Running my_none method test.
+# Running my_none? method tests.
 # *********************************
-print "my_none:", "\n"
-print([1, 2, 3, 4, 5].my_none? { |num| num < 1 }, "\n")
-print([1, 2, 3, 4, 5].my_none? { |num| num > 10 }, "\n")
-print([].my_none? { |num| num < 1 }, "\n")
-print([1, 2, 3, 4, 5].my_none? { |num| num < 10 }, "\n")
+print "Running my_none? method tests", "\n", "\n"
+print("[1, 2, 3, 4, 5].my_none? { |num| num < 1 }", "\n", "\n")
+print([1, 2, 3, 4, 5].my_none? { |num| num < 1 }, "\n", "\n")
+print("[1, 2, 3, 4, 5].my_none? { |num| num > 10 }", "\n", "\n")
+print([1, 2, 3, 4, 5].my_none? { |num| num > 10 }, "\n", "\n")
+print("[].my_none? { |num| num < 1 }", "\n", "\n")
+print([].my_none? { |num| num < 1 }, "\n", "\n")
+print("[1, 2, 3, 4, 5].my_none? { |num| num < 10 }", "\n", "\n")
+print([1, 2, 3, 4, 5].my_none? { |num| num < 10 }, "\n", "\n")
+print("[].my_none?", "\n", "\n")
+print([].my_none?, "\n", "\n")
+print("[1, 2, 3, 4, 5].my_none?(Integer)", "\n", "\n")
+print([1, 2, 3, 4, 5].my_none?(Integer), "\n", "\n")
+
 
 # *********************************
 # Running my_count method test.
@@ -359,17 +395,6 @@ print "my_inject: The most difficult method I did :-)", "\n"
 print([1, 2, 3, 4, 5].my_inject(2, :+), "\n")
 print([1, 2, 3, 4, 5].my_inject { |accumulator, num| accumulator * num }, "\n")
 print([1, 2, 3, 4, 5].my_inject, "\n")
-
-# *********************************
-# Beginning of multiply_els method.
-# *********************************
-def multiply_els(arr)
-  arr.my_inject(1, :*)
-end
-
-# *********************************
-# End of multiply_els method.
-# *********************************
 
 # *********************************
 # Running multiply_els method test.
