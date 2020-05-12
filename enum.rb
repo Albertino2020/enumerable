@@ -387,6 +387,13 @@ print("[2, 1, 2, 3, 4, 2, 5].my_count(2)", "\n", "\n")
 print([2, 1, 2, 3, 4, 2, 5].my_count(2), "\n", "\n")
 print("[2, 1, 2, 3, 4, 2, 5].my_count", "\n", "\n")
 print([2, 1, 2, 3, 4, 2, 5].my_count, "\n", "\n")
+print("[].my_count(2)", "\n", "\n")
+print([].my_count(2), "\n", "\n")
+print("[].my_count", "\n", "\n")
+print([].my_count, "\n", "\n")
+print("[].my_count { |num| num < 10 }", "\n", "\n")
+print([].my_count { |num| num < 10 }, "\n", "\n")
+
 
 # *********************************
 # Running my_map method test.
