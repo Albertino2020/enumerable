@@ -1,8 +1,8 @@
 # Advanced Building Blocks: Enumerable
 
-> This is a collection of the Ruby Enumerable-like methods implemented using the Ruby. It corresponds to  my first solo project in the Ruby Course from the Microverse Main Curiiculum
+> This is a collection of the Ruby Enumerable-like methods implemented using Ruby. It corresponds to  my first solo project in the Ruby Course from the Microverse Main Curiiculum
 
-![screenshot](./app_screenshot.png)
+![screenshot](./images/1.png)
 
 The project contains descriptions and comments for all methods implemented, as well as for the respective deployment tests.
 
@@ -13,30 +13,6 @@ The project contains descriptions and comments for all methods implemented, as w
 ## Live Demo
 
 [Live Demo Link](https://github.com/Albertino2020/enumerable)
-
-
-## Getting Started
-
-1-
-
-
-To get a local copy up and running follow these simple example steps.
-
-### Prerequisites
-1 - Install VSC
-2 - Install Ruby
-3 - Download or clone repository from GitHub
-4 - run ruby enum.rb
-### Setup
-
-### Install
-
-### Usage
-
-### Run tests
-
-### Deployment
-
 
 
 ## Author
