@@ -165,7 +165,7 @@ module Enumerable
   # *********************************
   def my_map
     mapped = []
-    return to_enum :my_map, print(" No block given.") unless block_given?
+    return to_enum :my_map, print(" No block was given.") unless block_given?
 
     0.upto(length - 1) do |index|
       mapped.push(yield self[index])
@@ -436,8 +436,11 @@ print([].my_inject { |accumulator, num| accumulator * num }, "\n", "\n")
 # *********************************
 # Running multiply_els method test.
 # *********************************
-print "multiply_els: multiply elements of an array", "\n"
-print multiply_els([2, 4, 5]), "\n"
+print "multiply_els: multiply elements of an array", "\n", "\n"
+print "multiply_els([2, 4, 5])", "\n", "\n"
+print multiply_els([2, 4, 5]), "\n", "\n"
+print "multiply_els([])", "\n", "\n"
+print multiply_els([]), "\n", "\n"
 
 # *********************************
 # Running my_map_proc method.
@@ -454,7 +457,7 @@ print [2, 4, 5].my_map_proc(test), "\n"
 # *********************************
 # Running my_map_pb method.
 # *********************************
-print "my_map_pb: Accepts both procs and blocs:", "\n"
-print [2, 4, 5].my_map_pb(test), "\n"
-print [2, 4, 5].my_map_pb(test) { |num| num < 3 }, "\n"
-print([2, 4, 5].my_map_pb { |num| num < 3 }, "\n")
+print "my_map_pb: Accepts both procs and blocs:", "\n", "\n"
+print [2, 4, 5].my_map_pb(test), "\n", "\n"
+print [2, 4, 5].my_map_pb(test) { |num| num < 3 }, "\n", "\n"
+print([2, 4, 5].my_map_pb { |num| num < 3 }, "\n", "\n")
