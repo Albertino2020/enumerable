@@ -219,6 +219,7 @@ module Enumerable
   # *********************************
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def my_inject(*args)
+    return nil, print("Array is empty. => ") unless !self.empty?
     input_arr = is_a?(Array) ? self : to_a
     input_arr.unshift(args[0]) if args[0].is_a?(Integer)
     accumulator = input_arr[0]
@@ -258,7 +259,8 @@ end
 # Beginning of multiply_els method.
 # *********************************
 def multiply_els(arr)
-  arr.my_inject(1, :*)
+  return arr.my_inject(1, :*) unless arr.empty?
+  return 0 if arr.empty?
 end
 
 # *********************************
@@ -426,6 +428,10 @@ print("[1, 2, 3, 4, 5].my_inject", "\n", "\n")
 print([1, 2, 3, 4, 5].my_inject, "\n", "\n")
 print("[1, 2, 3, 4, 5].my_inject(2)", "\n", "\n")
 print([1, 2, 3, 4, 5].my_inject(2), "\n", "\n")
+print("[].my_inject(2, :*)", "\n", "\n")
+print([].my_inject(2, :*), "\n", "\n")
+print("[].my_inject { |accumulator, num| accumulator * num }", "\n", "\n")
+print([].my_inject { |accumulator, num| accumulator * num }, "\n", "\n")
 
 # *********************************
 # Running multiply_els method test.
