@@ -144,10 +144,15 @@ module Enumerable
   # *********************************
   def my_count(arg = 0)
     temp = 0
-    return temp += (my_select { |x| x == arg }).length unless block_given?
-
+    return 0 unless !self.empty?
     0.upto(length - 1) do |index|
-      temp += 1 if yield(self[index])
+      if block_given?
+        temp += 1 if yield(self[index])
+      elsif !arg.nil?
+        temp += 1 if self[index] == arg
+      else
+        temp += 1
+      end
     end
     temp
   end
@@ -370,7 +375,6 @@ print("[].my_none?", "\n", "\n")
 print([].my_none?, "\n", "\n")
 print("[1, 2, 3, 4, 5].my_none?(Integer)", "\n", "\n")
 print([1, 2, 3, 4, 5].my_none?(Integer), "\n", "\n")
-
 
 # *********************************
 # Running my_count method test.
