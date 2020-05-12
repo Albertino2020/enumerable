@@ -147,22 +147,14 @@ module Enumerable
   # Beginning of my_count method.
   # *********************************
   NOTHING = Object.new
-  def my_count(arg = NOTHING)
-    if NOTHING === arg
-     return size
-    end
 
+  def my_count(arg = NOTHING)
     if block_given?
-      count = 0
-      0.upto(length - 1) do |index|
-        count += 1 if yield self[index]
-      end
-      return count
+      my_select { |index| yield index }.length
     else
-      my_select { |index| index == arg }.length
+      my_select { |index| index == arg || NOTHING === arg }.length
     end
   end
-
 
   # *********************************
   # End of my_count method.
