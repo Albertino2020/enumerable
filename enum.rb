@@ -10,9 +10,9 @@ module Enumerable
     checked = []
     num = nums.is_a?(Integer) && nums >= 1 ? nums : 0
     unless block_given?
-      (return to_enum :my_each, (puts "=>", "No block was given", "\n"))
+      (return to_enum :my_each, (print "=>", "No block was given", "\n"))
     end
-    (return nil, puts("=>", "Array is empty", "\n")) if empty?
+    (return nil, print("=>", "Array is empty", "\n")) if empty?
 
     0.upto(length - num) do |index|
       if num.is_a?(Integer) && num >= 1
@@ -40,9 +40,9 @@ module Enumerable
     checked = {}
     num = nums.is_a?(Integer) && nums >= 1 ? nums : 0
     unless block_given?
-      (return to_enum :my_each_with_index, (puts "=>", "No block was given", "\n"))
+      (return to_enum :my_each_with_index, (print "=>", "No block was given", "\n"))
     end
-    (return nil, puts("=>", "Array is empty", "\n")) if empty?
+    (return nil, print("=>", "Array is empty", "\n")) if empty?
 
     0.upto(length - num) do |index|
       if num.is_a?(Integer) && num >= 1
@@ -450,7 +450,8 @@ print multiply_els(3), "\n", "\n"
 # Running my_map_proc method.
 # This method is an adaptation of my_map to accep procs.
 # *********************************
-print "Running my_map_proc method: Accepts procs. his method is an adaptation of my_map to accep procs.", "\n", "\n"
+print "Running my_map_proc method: Accepts procs. 
+This method is an adaptation of my_map to accep procs.", "\n", "\n"
 
 print("def procs(power)
 proc { |x| x ** power }
