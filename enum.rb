@@ -258,9 +258,9 @@ end
 # *********************************
 # Beginning of multiply_els method.
 # *********************************
-def multiply_els(arr)
-  return arr.my_inject(1, :*) unless arr.empty?
-  return 0 if arr.empty?
+def multiply_els(arr = [])
+  return arr.my_inject(1, :*) unless !(Array === arr)
+  return nil, print("Invalid argument. Insert an array of numbers.") if !(Array === arr)
 end
 
 # *********************************
@@ -440,7 +440,11 @@ print "multiply_els: multiply elements of an array", "\n", "\n"
 print "multiply_els([2, 4, 5])", "\n", "\n"
 print multiply_els([2, 4, 5]), "\n", "\n"
 print "multiply_els([])", "\n", "\n"
-print multiply_els([]), "\n", "\n"
+print multiply_els(), "\n", "\n"
+print "multiply_els([])", "\n", "\n"
+print multiply_els(), "\n", "\n"
+print "multiply_els(3)", "\n", "\n"
+print multiply_els(3), "\n", "\n"
 
 # *********************************
 # Running my_map_proc method.
