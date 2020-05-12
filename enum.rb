@@ -198,13 +198,13 @@ module Enumerable
   # Beginning of my_map_pb method
   # *********************************
   # rubocop:disable Metrics/AbcSize
-  def my_map_pb(proc = nil)
+  def my_map_pb(procs = NOTHING)
     mapped = []
-    return to_enum :my_map_pb unless proc.is_a?(Proc) || block_given?
+    return to_enum :my_map_pb, print("Kindly enter a valid proc or block", "\n", "\n") unless Proc === procs || block_given?
 
     0.upto(length - 1) do |index|
-      mapped.push(proc.call(self[index])) if proc.is_a?(Proc)
-      mapped.push(yield self[index]) if block_given? && !proc.is_a?(Proc)
+      mapped.push(procs.call(self[index])) if Proc === procs
+      mapped.push(yield self[index]) if block_given? && !Proc === procs
     end
     mapped
   end
@@ -471,9 +471,18 @@ print "[].my_map_proc(exp2)", "\n", "\n"
 print [].my_map_proc(exp2), "\n", "\n"
 
 # *********************************
-# Running my_map_pb method.
+# Running my_map_pb method. This 
+# an adaptation of the my_map method
+# to accept both procs and blocks.
 # *********************************
 print "my_map_pb: Accepts both procs and blocs:", "\n", "\n"
+print "[2, 4, 5].my_map_pb(exp2)", "\n", "\n"
 print [2, 4, 5].my_map_pb(exp2), "\n", "\n"
+print "[2, 4, 5].my_map_pb(exp2) { |num| num < 3 }", "\n", "\n"
 print [2, 4, 5].my_map_pb(exp2) { |num| num < 3 }, "\n", "\n"
+print("[2, 4, 5].my_map_pb { |num| num < 3 }", "\n", "\n")
 print([2, 4, 5].my_map_pb { |num| num < 3 }, "\n", "\n")
+print("[].my_map_pb { |num| num < 3 }", "\n", "\n")
+print([].my_map_pb { |num| num < 3 }, "\n", "\n")
+print("[2, 4, 5].my_map_pb", "\n", "\n")
+print([2, 4, 5].my_map_pb, "\n", "\n")
