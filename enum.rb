@@ -180,12 +180,12 @@ module Enumerable
   # *********************************
   # Beginning of my_map with proc method.
   # *********************************
-  def my_map_proc(proc)
+  def my_map_proc(procs = NOTHING)
     mapped = []
-    return to_enum :my_map_proc unless proc.is_a?(Proc)
+    return to_enum :my_map_proc, print("Please enter a valid proc.", "\n", "\n") unless Proc === procs
 
     0.upto(length - 1) do |index|
-      mapped.push(proc.call(self[index]))
+      mapped.push(procs.call(self[index]))
     end
     mapped
   end
@@ -448,20 +448,32 @@ print multiply_els(3), "\n", "\n"
 
 # *********************************
 # Running my_map_proc method.
+# This method is an adaptation of my_map to accep procs.
 # *********************************
-print "my_map_proc: Accepts procs", "\n"
+print "Running my_map_proc method: Accepts procs. his method is an adaptation of my_map to accep procs.", "\n", "\n"
 
-def procs(exp)
-  proc { |x| x ** exp }
+print("def procs(power)
+proc { |x| x ** power }
 end
 
-test = procs(2)
-print [2, 4, 5].my_map_proc(test), "\n"
+exp2 = procs(2)
+print [2, 4, 5].my_map_proc(exp2)", "\n", "\n")
+
+def procs(power)
+  proc { |x| x ** power }
+end
+
+exp2 = procs(2)
+print [2, 4, 5].my_map_proc(exp2), "\n", "\n"
+print "[2, 4, 5].my_map_proc()", "\n", "\n"
+print [2, 4, 5].my_map_proc(), "\n", "\n"
+print "[].my_map_proc(exp2)", "\n", "\n"
+print [].my_map_proc(exp2), "\n", "\n"
 
 # *********************************
 # Running my_map_pb method.
 # *********************************
 print "my_map_pb: Accepts both procs and blocs:", "\n", "\n"
-print [2, 4, 5].my_map_pb(test), "\n", "\n"
-print [2, 4, 5].my_map_pb(test) { |num| num < 3 }, "\n", "\n"
+print [2, 4, 5].my_map_pb(exp2), "\n", "\n"
+print [2, 4, 5].my_map_pb(exp2) { |num| num < 3 }, "\n", "\n"
 print([2, 4, 5].my_map_pb { |num| num < 3 }, "\n", "\n")
