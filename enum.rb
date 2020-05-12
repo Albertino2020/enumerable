@@ -231,11 +231,12 @@ module Enumerable
       elsif !@operator.nil?
         accumulator = input_arr[index].send(@operator, accumulator)
       else
-        return nil
+       nil
       end
     end
+    
     accumulator = yield(accumulator, input_arr[0]) if block_given?
-    puts('Please enter arguments or a block') if accumulator == input_arr[0]
+    print("No operator or block given.", "\n", "\n") if accumulator == args[0] || accumulator == input_arr[0]
     accumulator
   end
 
@@ -410,10 +411,15 @@ print([].my_map { |num| num * 2 }, "\n", "\n")
 # *********************************
 # Running my_inject method test.
 # *********************************
-print 'my_inject: The most difficult method I did :-)', "\n"
-print([1, 2, 3, 4, 5].my_inject(2, :+), "\n")
-print([1, 2, 3, 4, 5].my_inject { |accumulator, num| accumulator * num }, "\n")
-print([1, 2, 3, 4, 5].my_inject, "\n")
+print 'Running my_inject method tests', "\n", "\n"
+print("[1, 2, 3, 4, 5].my_inject(2, :+)", "\n", "\n")
+print([1, 2, 3, 4, 5].my_inject(2, :+), "\n", "\n")
+print("[1, 2, 3, 4, 5].my_inject { |accumulator, num| accumulator * num }", "\n", "\n")
+print([1, 2, 3, 4, 5].my_inject { |accumulator, num| accumulator * num }, "\n", "\n")
+print("[1, 2, 3, 4, 5].my_inject", "\n", "\n")
+print([1, 2, 3, 4, 5].my_inject, "\n", "\n")
+print("[1, 2, 3, 4, 5].my_inject(2)", "\n", "\n")
+print([1, 2, 3, 4, 5].my_inject(2), "\n", "\n")
 
 # *********************************
 # Running multiply_els method test.
