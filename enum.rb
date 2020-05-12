@@ -6,13 +6,14 @@ module Enumerable
   # *********************************
   # Beginning of my_each method.
   # *********************************
+  # rubocop: disable Metrics/AbcSize,Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
   def my_each(nums = 0)
     checked = []
     num = nums.is_a?(Integer) && nums >= 1 ? nums : 0
     unless block_given?
-      (return to_enum :my_each, (print "=>", "No block was given", "\n"))
+      (return to_enum :my_each, (print '=>', 'No block was given', "\n"))
     end
-    (return nil, print("=>", "Array is empty", "\n")) if empty?
+    (return nil, print('=>', 'Array is empty', "\n")) if empty?
 
     0.upto(length - num) do |index|
       if num.is_a?(Integer) && num >= 1
@@ -28,7 +29,7 @@ module Enumerable
     print checked unless checked.empty?
   end
 
-  # rubocop:enable
+  # rubocop: enable Metrics/ModuleLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
   # *********************************
   # End of my_each method.
   # *********************************
@@ -36,13 +37,15 @@ module Enumerable
   # *********************************
   # Beginning of my_each_with_index method.
   # *********************************
+  # rubocop: disable Metrics/AbcSize,Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
   def my_each_with_index(nums = 0)
     checked = {}
     num = nums.is_a?(Integer) && nums >= 1 ? nums : 0
     unless block_given?
-      (return to_enum :my_each_with_index, (print "=>", "No block was given", "\n"))
+      return to_enum :my_each_with_index,
+                     (print '=>', 'No block was given', "\n")
     end
-    (return nil, print("=>", "Array is empty", "\n")) if empty?
+    return nil, print('=>', 'Array is empty', "\n") if empty?
 
     0.upto(length - num) do |index|
       if num.is_a?(Integer) && num >= 1
@@ -58,6 +61,8 @@ module Enumerable
     print checked unless checked.empty?
   end
 
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+
   # *********************************
   # End of my_each_with_index method.
   # *********************************
@@ -65,10 +70,11 @@ module Enumerable
   # *********************************
   # Beginning of my_select method.
   # *********************************
+  # rubocop:disable Metrics/MethodLength
   def my_select
     arr = []
     unless block_given?
-      return to_enum :my_select, print("No block was given.", "\n", "\n")
+      return to_enum :my_select, print('No block was given.', "\n", "\n")
     end
 
     if !empty?
@@ -76,12 +82,13 @@ module Enumerable
         arr.push(self[index]) if yield(self[index])
       end
     else
-      print "=> ", "Array is empty.", "\n", "\n"
+      print '=> ', 'Array is empty.', "\n", "\n"
     end
-    print("=> ", arr, "\n", "\n") unless arr.empty?
+    print('=> ', arr, "\n", "\n") unless arr.empty?
     arr
   end
 
+  # rubocop: enable Metrics/MethodLength
   # *********************************
   # End of my_select method.
   # *********************************
@@ -89,18 +96,20 @@ module Enumerable
   # *********************************
   # Beginning of my_all method.
   # *********************************
+  # rubocop: disable Style/CaseEquality, Layout/EndAlignment
   def my_all?(arg = nil)
     temp = true
     0.upto(length - 1) do |index|
       temp &&= if block_given?
-          yield(self[index])
-        else
-          (arg === self[index])
+                 yield(self[index])
+               else
+                 (arg === self[index])
         end
     end
     temp
   end
 
+  # rubocop: enable Style/CaseEquality, Layout/EndAlignment
   # *********************************
   # End of my_all? method.
   # *********************************
@@ -108,18 +117,20 @@ module Enumerable
   # *********************************
   # Beginning of my_any? method.
   # *********************************
+  # rubocop: disable Style/CaseEquality, Layout/EndAlignment
   def my_any?(arg = nil)
     temp = false
     0.upto(length - 1) do |index|
       temp ||= if block_given?
-          yield(self[index])
-        else
-          (arg === self[index])
+                 yield(self[index])
+               else
+                 (arg === self[index])
         end
     end
     temp
   end
 
+  # rubocop: enable Style/CaseEquality, Layout/EndAlignment
   # *********************************
   # End of my_any? method.
   # *********************************
@@ -127,18 +138,20 @@ module Enumerable
   # *********************************
   # Beginning of my_none? method.
   # *********************************
+  # rubocop: disable Style/CaseEquality, Layout/EndAlignment
   def my_none?(pat = nil)
     temp = true
     0.upto(length - 1) do |index|
       temp &&= if block_given?
-          !yield(self[index])
-        else
-          !(pat === self[index])
+                 !yield(self[index])
+               else
+                 !(pat === self[index])
         end
     end
     temp
   end
 
+  # rubocop: enable Style/CaseEquality, Layout/EndAlignment
   # *********************************
   # End of my_none? method.
   # *********************************
@@ -146,6 +159,7 @@ module Enumerable
   # *************************(********
   # Beginning of my_count method.
   # *********************************
+  # rubocop: disable Style/CaseEquality
   NOTHING = Object.new
 
   def my_count(arg = NOTHING)
@@ -156,6 +170,8 @@ module Enumerable
     end
   end
 
+  # rubocop: enable Style/CaseEquality
+
   # *********************************
   # End of my_count method.
   # *********************************
@@ -165,13 +181,15 @@ module Enumerable
   # *********************************
   def my_map
     mapped = []
-    return to_enum :my_map, print(" No block was given.") unless block_given?
+    return to_enum :my_map, print(' No block was given.') unless block_given?
 
     0.upto(length - 1) do |index|
       mapped.push(yield self[index])
     end
     mapped
   end
+
+  # rubocop: enable, Metrics/PerceivedComplexity
 
   # *********************************
   # End of my_map method.
@@ -180,15 +198,20 @@ module Enumerable
   # *********************************
   # Beginning of my_map with proc method.
   # *********************************
+  # rubocop: disable Layout/LineLength, Style/CaseEquality
   def my_map_proc(procs = NOTHING)
     mapped = []
-    return to_enum :my_map_proc, print("Please enter a valid proc.", "\n", "\n") unless Proc === procs
+    unless Proc === procs
+      return to_enum :my_map_proc, print('Please enter a valid proc.', "\n", "\n")
+    end
 
     0.upto(length - 1) do |index|
       mapped.push(procs.call(self[index]))
     end
     mapped
   end
+
+  # rubocop: enable Layout/LineLength, Style/CaseEquality
 
   # *********************************
   # End of my_map with proc method.
@@ -197,10 +220,13 @@ module Enumerable
   # *********************************
   # Beginning of my_map_pb method
   # *********************************
-  # rubocop:disable Metrics/AbcSize
+
+  # rubocop: disable Metrics/AbcSize, Layout/LineLength, Style/CaseEquality
   def my_map_pb(procs = NOTHING)
     mapped = []
-    return to_enum :my_map_pb, print("Kindly enter a valid proc or block", "\n", "\n") unless Proc === procs || block_given?
+    unless Proc === procs || block_given?
+      return to_enum :my_map_pb, print('Kindly enter a valid proc or block', "\n", "\n")
+    end
 
     0.upto(length - 1) do |index|
       mapped.push(procs.call(self[index])) if Proc === procs
@@ -209,7 +235,7 @@ module Enumerable
     mapped
   end
 
-  # rubocop:enable Metrics/AbcSize
+  # rubocop: enable Metrics/AbcSize, Layout/LineLength, Style/CaseEquality
   # *********************************
   # End of my_map_pb method.
   # *********************************
@@ -217,9 +243,11 @@ module Enumerable
   # *********************************
   # Beginning of my_inject method.
   # *********************************
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+
+  # rubocop: disable Style/MultipleComparison, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
   def my_inject(*args)
-    return nil, print("Array is empty. => ") unless !self.empty?
+    return nil, print('Array is empty. => ') if empty?
+
     input_arr = is_a?(Array) ? self : to_a
     input_arr.unshift(args[0]) if args[0].is_a?(Integer)
     accumulator = input_arr[0]
@@ -231,37 +259,39 @@ module Enumerable
         accumulator = yield(accumulator, input_arr[index])
       elsif !@operator.nil?
         accumulator = input_arr[index].send(@operator, accumulator)
-      else
-        nil
       end
     end
 
     accumulator = yield(accumulator, input_arr[0]) if block_given?
     if accumulator == args[0] || accumulator == input_arr[0]
-      print("No operator or block given.", "\n", "\n")
-      print "Accumulator => "
+      print('No operator or block given.', "\n", "\n")
+      print 'Accumulator => '
     else
-      print "=> "
+      print '=> '
     end
 
     accumulator
   end
 
-  # rubocop:enable, Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:enable Style/MultipleComparison, Metrics/CyclomaticComplexity, Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity
   # *********************************
   # End of my_inject method.
   # *********************************
 end
 
-# rubocop:enable Metrics/ModuleLength
-
 # *********************************
 # Beginning of multiply_els method.
 # *********************************
+# rubocop: disable Style/GuardClause, Style/CaseEquality
 def multiply_els(arr = [])
-  return arr.my_inject(1, :*) unless !(Array === arr)
-  return nil, print("Invalid argument. Insert an array of numbers.") if !(Array === arr)
+  return arr.my_inject(1, :*) if Array === arr
+
+  unless Array === arr
+    [nil, print('Invalid argument, Insert an array of numbers', "\n", "\n")]
+  end
 end
+
+# rubocop: enable Style/GuardClause, Style/CaseEquality
 
 # *********************************
 # End of multiply_els method.
@@ -286,37 +316,38 @@ end
 # *********************************
 # Running my_each method tests.
 # *********************************
-print "Running my_each method test:", "\n", "\n"
+# rubocop: disable Layout/LineLength
+print 'Running my_each method test:', "\n", "\n"
 arr = []
-print "arr = []", "\n", "\n"
-print "arr.my_each(0) { |num| num * 2 }", "\n", "\n"
+print 'arr = []', "\n", "\n"
+print 'arr.my_each(0) { |num| num * 2 }', "\n", "\n"
 arr.my_each(0) { |num| num * 2 }
-print "arr.my_each(3)", "\n", "\n"
+print 'arr.my_each(3)', "\n", "\n"
 arr.my_each(3)
-print "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].my_each (3) { |num| arr.push(num * 2) }", "\n", "\n"
+print '[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].my_each (3) { |num| arr.push(num * 2) }', "\n", "\n"
 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].my_each(3) { |num| num * 2 }
 print "\n", "\n"
-print "[1, 2, 3, 4, 5].my_each { |num| num * 2 }", "\n", "\n"
+print '[1, 2, 3, 4, 5].my_each { |num| num * 2 }', "\n", "\n"
 [1, 2, 3, 4, 5].my_each { |num| num * 2 }
 print "\n", "\n"
 # ***************************************
 # Running my_each_with_index method tests.
 # ***************************************
-print "running my_each_with_index tests: ", "\n", "\n"
+print 'running my_each_with_index tests: ', "\n", "\n"
 print "hash = {}
 %w[cat dog wombat].my_each_with_index (2) do |item, index|
   hash[item] = index
 end"
-print "\n" "\n"
+print "\n", "\n"
 hash = {}
-%w[cat dog wombat].my_each_with_index (2) do |item, index|
+%w[cat dog wombat].my_each_with_index(2) do |item, index|
   hash[item] = index
 end
-print "\n" "\n"
+print "\n", "\n"
 print "%w[cat dog wombat].my_each_with_index do |item, index|
 hash[item] = index
 end"
-print "\n" "\n"
+print "\n", "\n"
 %w[cat dog wombat].my_each_with_index do |item, index|
   hash[item] = index
 end
@@ -325,132 +356,132 @@ print "\n", "\n"
 # *********************************
 # Running my_select method tests.
 # *********************************
-print "Running my_select:method tests ", "\n", "\n"
+print 'Running my_select:method tests ', "\n", "\n"
 
-print "[1, 2, 3, 4, 5].my_select(&:even?)", "\n", "\n"
+print '[1, 2, 3, 4, 5].my_select(&:even?)', "\n", "\n"
 
 print [1, 2, 3, 4, 5].my_select(&:even?)
-print "[1, 2, 3, 4, 5].my_select", "\n", "\n"
+print '[1, 2, 3, 4, 5].my_select', "\n", "\n"
 [1, 2, 3, 4, 5].my_select
-print "[].my_select(&:even?)", "\n", "\n"
+print '[].my_select(&:even?)', "\n", "\n"
 [].my_select(&:even?)
 
 # *********************************
 # Running my_all? method tests.
 # *********************************
-print "Running my_all? tests:", "\n", "\n"
-print "[1, 2, 3, 4, 5].my_all? { |num| num < 3 }", "\n", "\n"
+print 'Running my_all? tests:', "\n", "\n"
+print '[1, 2, 3, 4, 5].my_all? { |num| num < 3 }', "\n", "\n"
 print([1, 2, 3, 4, 5].my_all? { |num| num < 3 }, "\n", "\n")
-print "[1, 2, 3, 4, 5].my_all? { |num| num < 10 }", "\n", "\n"
+print '[1, 2, 3, 4, 5].my_all? { |num| num < 10 }', "\n", "\n"
 print([1, 2, 3, 4, 5].my_all? { |num| num < 10 }, "\n", "\n")
-print "[1, 2, 3, 4, 5].my_all?", "\n", "\n"
+print '[1, 2, 3, 4, 5].my_all?', "\n", "\n"
 print([1, 2, 3, 4, 5].my_all?, "\n", "\n")
-print "[1, 2, 3, 4, 5].my_all?(Numeric)", "\n", "\n"
+print '[1, 2, 3, 4, 5].my_all?(Numeric)', "\n", "\n"
 print([1, 2, 3, 4, 5].my_all?(Numeric), "\n", "\n")
-print "[].my_all?", "\n", "\n"
+print '[].my_all?', "\n", "\n"
 print([].my_all?, "\n", "\n")
 
 # *********************************
 # Running my_any? method test.
 # *********************************
-print "Running my_any? method test", "\n", "\n"
-print("[1, 2, 3, 4, 5].my_any? { |num| num < 1 }", "\n", "\n")
+print 'Running my_any? method test', "\n", "\n"
+print('[1, 2, 3, 4, 5].my_any? { |num| num < 1 }', "\n", "\n")
 print([1, 2, 3, 4, 5].my_any? { |num| num < 1 }, "\n", "\n")
-print("[1, 2, 3, 4, 5].my_any? { |num| num > 10 }", "\n", "\n")
+print('[1, 2, 3, 4, 5].my_any? { |num| num > 10 }', "\n", "\n")
 print([1, 2, 3, 4, 5].my_any? { |num| num > 10 }, "\n", "\n")
-print("[].my_any? { |num| num < 1 }", "\n", "\n")
+print('[].my_any? { |num| num < 1 }', "\n", "\n")
 print([].my_any? { |num| num < 1 }, "\n", "\n")
-print("[1, 2, 3, 4, 5].my_any? { |num| num < 10 }", "\n", "\n")
+print('[1, 2, 3, 4, 5].my_any? { |num| num < 10 }', "\n", "\n")
 print([1, 2, 3, 4, 5].my_any? { |num| num < 10 }, "\n", "\n")
-print("[].my_any?", "\n", "\n")
+print('[].my_any?', "\n", "\n")
 print([].my_any?, "\n", "\n")
-print("[1, 2, 3, 4, 5].my_any?(Integer)", "\n", "\n")
+print('[1, 2, 3, 4, 5].my_any?(Integer)', "\n", "\n")
 print([1, 2, 3, 4, 5].my_any?(Integer), "\n", "\n")
 
 # *********************************
 # Running my_none? method tests.
 # *********************************
-print "Running my_none? method tests", "\n", "\n"
-print("[1, 2, 3, 4, 5].my_none? { |num| num < 1 }", "\n", "\n")
+print 'Running my_none? method tests', "\n", "\n"
+print('[1, 2, 3, 4, 5].my_none? { |num| num < 1 }', "\n", "\n")
 print([1, 2, 3, 4, 5].my_none? { |num| num < 1 }, "\n", "\n")
-print("[1, 2, 3, 4, 5].my_none? { |num| num > 10 }", "\n", "\n")
+print('[1, 2, 3, 4, 5].my_none? { |num| num > 10 }', "\n", "\n")
 print([1, 2, 3, 4, 5].my_none? { |num| num > 10 }, "\n", "\n")
-print("[].my_none? { |num| num < 1 }", "\n", "\n")
+print('[].my_none? { |num| num < 1 }', "\n", "\n")
 print([].my_none? { |num| num < 1 }, "\n", "\n")
-print("[1, 2, 3, 4, 5].my_none? { |num| num < 10 }", "\n", "\n")
+print('[1, 2, 3, 4, 5].my_none? { |num| num < 10 }', "\n", "\n")
 print([1, 2, 3, 4, 5].my_none? { |num| num < 10 }, "\n", "\n")
-print("[].my_none?", "\n", "\n")
+print('[].my_none?', "\n", "\n")
 print([].my_none?, "\n", "\n")
-print("[1, 2, 3, 4, 5].my_none?(Integer)", "\n", "\n")
+print('[1, 2, 3, 4, 5].my_none?(Integer)', "\n", "\n")
 print([1, 2, 3, 4, 5].my_none?(Integer), "\n", "\n")
 
 # *********************************
 # Running my_count method tests.
 # *********************************
-print "running my_count method tests:", "\n", "\n"
-print("[1, 2, 3, 4, 5].my_count { |num| num < 3 }", "\n")
+print 'running my_count method tests:', "\n", "\n"
+print('[1, 2, 3, 4, 5].my_count { |num| num < 3 }', "\n")
 print([1, 2, 3, 4, 5].my_count { |num| num < 3 }, "\n", "\n")
-print("[1, 2, 3, 4, 5].my_count { |num| num < 10 }", "\n", "\n")
+print('[1, 2, 3, 4, 5].my_count { |num| num < 10 }', "\n", "\n")
 print([1, 2, 3, 4, 5].my_count { |num| num < 10 }, "\n", "\n")
-print("[2, 1, 2, 3, 4, 2, 5].my_count(2)", "\n", "\n")
+print('[2, 1, 2, 3, 4, 2, 5].my_count(2)', "\n", "\n")
 print([2, 1, 2, 3, 4, 2, 5].my_count(2), "\n", "\n")
-print("[2, 1, 2, 3, 4, 2, 5].my_count", "\n", "\n")
+print('[2, 1, 2, 3, 4, 2, 5].my_count', "\n", "\n")
 print([2, 1, 2, 3, 4, 2, 5].my_count, "\n", "\n")
-print("[].my_count(2)", "\n", "\n")
+print('[].my_count(2)', "\n", "\n")
 print([].my_count(2), "\n", "\n")
-print("[].my_count", "\n", "\n")
+print('[].my_count', "\n", "\n")
 print([].my_count, "\n", "\n")
-print("[].my_count { |num| num < 10 }", "\n", "\n")
+print('[].my_count { |num| num < 10 }', "\n", "\n")
 print([].my_count { |num| num < 10 }, "\n", "\n")
 
 # *********************************
 # Running my_map method tests.
 # *********************************
-print "Running my_map method tests", "\n", "\n"
-print("[1, 2, 3, 4, 5].my_map { |num| num < 3 }", "\n", "\n")
+print 'Running my_map method tests', "\n", "\n"
+print('[1, 2, 3, 4, 5].my_map { |num| num < 3 }', "\n", "\n")
 print([1, 2, 3, 4, 5].my_map { |num| num < 3 }, "\n", "\n")
-print("[1, 2, 3, 4, 5].my_map { |num| num * 2 }", "\n", "\n")
+print('[1, 2, 3, 4, 5].my_map { |num| num * 2 }', "\n", "\n")
 print([1, 2, 3, 4, 5].my_map { |num| num * 2 }, "\n", "\n")
-print("[1, 2, 3, 4, 5].my_map", "\n", "\n")
+print('[1, 2, 3, 4, 5].my_map', "\n", "\n")
 print([1, 2, 3, 4, 5].my_map, "\n", "\n")
-print("[].my_map { |num| num * 2 }", "\n", "\n")
+print('[].my_map { |num| num * 2 }', "\n", "\n")
 print([].my_map { |num| num * 2 }, "\n", "\n")
 
 # *********************************
 # Running my_inject method test.
 # *********************************
-print "Running my_inject method tests", "\n", "\n"
-print("[1, 2, 3, 4, 5].my_inject(2, :+)", "\n", "\n")
+print 'Running my_inject method tests', "\n", "\n"
+print('[1, 2, 3, 4, 5].my_inject(2, :+)', "\n", "\n")
 print([1, 2, 3, 4, 5].my_inject(2, :+), "\n", "\n")
-print("[1, 2, 3, 4, 5].my_inject { |accumulator, num| accumulator * num }", "\n", "\n")
+print('[1, 2, 3, 4, 5].my_inject { |accumulator, num| accumulator * num }', "\n", "\n")
 print([1, 2, 3, 4, 5].my_inject { |accumulator, num| accumulator * num }, "\n", "\n")
-print("[1, 2, 3, 4, 5].my_inject", "\n", "\n")
+print('[1, 2, 3, 4, 5].my_inject', "\n", "\n")
 print([1, 2, 3, 4, 5].my_inject, "\n", "\n")
-print("[1, 2, 3, 4, 5].my_inject(2)", "\n", "\n")
+print('[1, 2, 3, 4, 5].my_inject(2)', "\n", "\n")
 print([1, 2, 3, 4, 5].my_inject(2), "\n", "\n")
-print("[].my_inject(2, :*)", "\n", "\n")
+print('[].my_inject(2, :*)', "\n", "\n")
 print([].my_inject(2, :*), "\n", "\n")
-print("[].my_inject { |accumulator, num| accumulator * num }", "\n", "\n")
+print('[].my_inject { |accumulator, num| accumulator * num }', "\n", "\n")
 print([].my_inject { |accumulator, num| accumulator * num }, "\n", "\n")
 
 # *********************************
 # Running multiply_els method test.
 # *********************************
-print "multiply_els: multiply elements of an array", "\n", "\n"
-print "multiply_els([2, 4, 5])", "\n", "\n"
+print 'multiply_els: multiply elements of an array', "\n", "\n"
+print 'multiply_els([2, 4, 5])', "\n", "\n"
 print multiply_els([2, 4, 5]), "\n", "\n"
-print "multiply_els([])", "\n", "\n"
-print multiply_els(), "\n", "\n"
-print "multiply_els([])", "\n", "\n"
-print multiply_els(), "\n", "\n"
-print "multiply_els(3)", "\n", "\n"
+print 'multiply_els([])', "\n", "\n"
+print multiply_els, "\n", "\n"
+print 'multiply_els([])', "\n", "\n"
+print multiply_els, "\n", "\n"
+print 'multiply_els(3)', "\n", "\n"
 print multiply_els(3), "\n", "\n"
 
 # *********************************
 # Running my_map_proc method.
 # This method is an adaptation of my_map to accep procs.
 # *********************************
-print "Running my_map_proc method: Accepts procs. 
+print "Running my_map_proc method: Accepts procs.
 This method is an adaptation of my_map to accep procs.", "\n", "\n"
 
 print("def procs(power)
@@ -461,29 +492,30 @@ exp2 = procs(2)
 print [2, 4, 5].my_map_proc(exp2)", "\n", "\n")
 
 def procs(power)
-  proc { |x| x ** power }
+  proc { |x| x**power }
 end
 
 exp2 = procs(2)
 print [2, 4, 5].my_map_proc(exp2), "\n", "\n"
-print "[2, 4, 5].my_map_proc()", "\n", "\n"
-print [2, 4, 5].my_map_proc(), "\n", "\n"
-print "[].my_map_proc(exp2)", "\n", "\n"
+print '[2, 4, 5].my_map_proc()', "\n", "\n"
+print [2, 4, 5].my_map_proc, "\n", "\n"
+print '[].my_map_proc(exp2)', "\n", "\n"
 print [].my_map_proc(exp2), "\n", "\n"
 
 # *********************************
-# Running my_map_pb method. This 
+# Running my_map_pb method. This
 # an adaptation of the my_map method
 # to accept both procs and blocks.
 # *********************************
-print "my_map_pb: Accepts both procs and blocs:", "\n", "\n"
-print "[2, 4, 5].my_map_pb(exp2)", "\n", "\n"
+print 'my_map_pb: Accepts both procs and blocs:', "\n", "\n"
+print '[2, 4, 5].my_map_pb(exp2)', "\n", "\n"
 print [2, 4, 5].my_map_pb(exp2), "\n", "\n"
-print "[2, 4, 5].my_map_pb(exp2) { |num| num < 3 }", "\n", "\n"
+print '[2, 4, 5].my_map_pb(exp2) { |num| num < 3 }', "\n", "\n"
 print [2, 4, 5].my_map_pb(exp2) { |num| num < 3 }, "\n", "\n"
-print("[2, 4, 5].my_map_pb { |num| num < 3 }", "\n", "\n")
+print('[2, 4, 5].my_map_pb { |num| num < 3 }', "\n", "\n")
 print([2, 4, 5].my_map_pb { |num| num < 3 }, "\n", "\n")
-print("[].my_map_pb { |num| num < 3 }", "\n", "\n")
+print('[].my_map_pb { |num| num < 3 }', "\n", "\n")
 print([].my_map_pb { |num| num < 3 }, "\n", "\n")
-print("[2, 4, 5].my_map_pb", "\n", "\n")
+print('[2, 4, 5].my_map_pb', "\n", "\n")
 print([2, 4, 5].my_map_pb, "\n", "\n")
+# rubocop: enable Layout/LineLength
