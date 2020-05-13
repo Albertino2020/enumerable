@@ -246,7 +246,9 @@ module Enumerable
 
   # rubocop: disable Style/MultipleComparison, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
   def my_inject(*args)
-    return nil, print("Array is empty. => ") if empty?
+    return accumulator = nil unless !empty?
+    return accumulator = nil if args.size == 0 && !block_given?
+   
 
     input_arr = is_a?(Array) ? self : to_a
     input_arr.unshift(args[0]) if (args.size == 1 && block_given?) || (args.size == 2 && !block_given?)
@@ -263,7 +265,9 @@ module Enumerable
         accumulator = input_arr[index].send(@operator, accumulator)
       end
     end
-    accumulator
+    print "Array is empty. " if accumulator.nil?
+    return accumulator 
+    
   end
 
   # rubocop:enable Style/MultipleComparison, Metrics/CyclomaticComplexity, Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity
@@ -445,23 +449,23 @@ print([].my_map { |num| num * 2 }, "\n", "\n")
 # *********************************
 print "Running my_inject method tests", "\n", "\n"
 print("[1, 2, 3, 4, 5].my_inject(2, :+)", "\n", "\n")
-print([1, 2, 3, 4, 5].my_inject(2, :+), "\n", "\n")
+print "=> ", [1, 2, 3, 4, 5].my_inject(2, :+), "\n", "\n"
 print("[1, 2, 3, 4, 5].my_inject { |accumulator, num| accumulator * num }", "\n", "\n")
-print([1, 2, 3, 4, 5].my_inject { |accumulator, num| accumulator * num }, "\n", "\n")
+print "=> ", [1, 2, 3, 4, 5].my_inject { |accumulator, num| accumulator * num }, "\n", "\n"
 print("[1, 2, 3, 4, 5].my_inject", "\n", "\n")
-print([1, 2, 3, 4, 5].my_inject, "\n", "\n")
+print "=> ", [1, 2, 3, 4, 5].my_inject, "\n", "\n"
 print("[1, 2, 3, 4, 5].my_inject(2)", "\n", "\n")
-print([1, 2, 3, 4, 5].my_inject(2), "\n", "\n")
+print "=> ", [1, 2, 3, 4, 5].my_inject(2), "\n", "\n"
 print("[].my_inject(2, :*)", "\n", "\n")
-print([].my_inject(2, :*), "\n", "\n")
+print "=> ", [].my_inject(2, :*), "\n", "\n"
 print("[].my_inject { |accumulator, num| accumulator * num }", "\n", "\n")
-print([].my_inject { |accumulator, num| accumulator * num }, "\n", "\n")
+print "=> ", [].my_inject { |accumulator, num| accumulator * num }, "\n", "\n"
 print "array = Array.new(100) { rand(0...9) }", "\n", "\n"
 print "array.my_inject(:+) == array.inject(:+)", "\n", "\n"
 array = Array.new(100) { rand(0...9) }
 print "=>", array.my_inject(:+) == array.inject(:+), "\n", "\n"
-print "operation = proc { |sum, n| sum + n }", "\n", "\n" 
-print "search = proc { |memo, word| memo.length > word.length ? memo : word }", "\n", "\n" 
+print "operation = proc { |sum, n| sum + n }", "\n", "\n"
+print "search = proc { |memo, word| memo.length > word.length ? memo : word }", "\n", "\n"
 print "array = Array.new(100){rand(0...9)}", "\n", "\n"
 print "words = %w[dog door rod blade]", "\n", "\n"
 operation = proc { |sum, n| sum + n }
