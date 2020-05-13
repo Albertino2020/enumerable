@@ -97,11 +97,13 @@ module Enumerable
   # Beginning of my_all method.
   # *********************************
   # rubocop: disable Style/CaseEquality, Layout/EndAlignment
-  def my_all?(arg = nil)
+  def my_all?(arg = NOTHING)
     temp = true
     0.upto(length - 1) do |index|
       temp &&= if block_given?
           yield(self[index])
+        elsif arg == NOTHING
+          true unless self[index].nil? || self[index] == false
         else
           (arg === self[index])
         end
@@ -123,9 +125,9 @@ module Enumerable
     0.upto(length - 1) do |index|
       temp ||= if block_given?
           yield(self[index])
-      elsif arg == NOTHING
-        true unless self[index].nil? || self[index] == false
-      else
+        elsif arg == NOTHING
+          true unless self[index].nil? || self[index] == false
+        else
           (arg === self[index])
         end
     end
@@ -379,6 +381,10 @@ print "[1, 2, 3, 4, 5].my_all?(Numeric)", "\n", "\n"
 print([1, 2, 3, 4, 5].my_all?(Numeric), "\n", "\n")
 print "[].my_all?", "\n", "\n"
 print([].my_all?, "\n", "\n")
+true_array = [1, true, "hi", []], "\n", "\n"
+false_array = [1, false, "hi", []], "\n", "\n", "\n", "\n"
+print "true_array.my_all? == true_array.all?", "\n", "\n"
+print "=> ", true_array.my_all? == true_array.all?, "\n", "\n"
 
 # *********************************
 # Running my_any? method test.
