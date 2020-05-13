@@ -443,6 +443,12 @@ print("[1, 2, 3, 4, 5].my_map", "\n", "\n")
 print([1, 2, 3, 4, 5].my_map, "\n", "\n")
 print("[].my_map { |num| num * 2 }", "\n", "\n")
 print([].my_map { |num| num * 2 }, "\n", "\n")
+print "array = Array.new(100){rand(0...9)}", "\n", "\n"
+print "block =  proc { |x| x ** 2 }", "\n", "\n"
+print "array.my_map(&block) == array.map(&block)", "\n", "\n"
+array = Array.new(100){rand(0...9)}
+block =  proc { |x| x ** 2 }
+print "=>", array.my_map(&block) == array.map(&block), "\n", "\n"
 
 # *********************************
 # Running my_inject method test.
