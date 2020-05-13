@@ -139,11 +139,13 @@ module Enumerable
   # Beginning of my_none? method.
   # *********************************
   # rubocop: disable Style/CaseEquality, Layout/EndAlignment
-  def my_none?(pat = nil)
+  def my_none?(pat = NOTHING)
     temp = true
     0.upto(length - 1) do |index|
       temp &&= if block_given?
           !yield(self[index])
+        elsif pat == NOTHING
+          false unless self[index].nil? || self[index] == true
         else
           !(pat === self[index])
         end
@@ -248,7 +250,6 @@ module Enumerable
   def my_inject(*args)
     return accumulator = nil unless !empty?
     return accumulator = nil if args.size == 0 && !block_given?
-   
 
     input_arr = is_a?(Array) ? self : to_a
     input_arr.unshift(args[0]) if (args.size == 1 && block_given?) || (args.size == 2 && !block_given?)
@@ -266,8 +267,7 @@ module Enumerable
       end
     end
     print "Array is empty. " if accumulator.nil?
-    return accumulator 
-    
+    return accumulator
   end
 
   # rubocop:enable Style/MultipleComparison, Metrics/CyclomaticComplexity, Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity
@@ -411,6 +411,18 @@ print("[].my_none?", "\n", "\n")
 print([].my_none?, "\n", "\n")
 print("[1, 2, 3, 4, 5].my_none?(Integer)", "\n", "\n")
 print([1, 2, 3, 4, 5].my_none?(Integer), "\n", "\n")
+print "true_array = [nil, false, true, []]", "\n", "\n"
+print "false_array = [nil, false, nil, false]", "\n", "\n"
+false_array = [nil, false, nil, false], "\n", "\n"
+true_array = [nil, false, true, []], "\n", "\n"
+print "false_array.my_none? == true", "\n", "\n"
+print "=> ", false_array.my_none? == true, "\n", "\n"
+print "true_array.my_none? == false", "\n", "\n"
+print "=> ", true_array.my_none? == false, "\n", "\n"
+print "false_array.my_none? == false_array.none?", "\n", "\n"
+print "=> ", false_array.my_none? == false_array.none?, "\n", "\n"
+print "true_array.my_none? == true_array.none?", "\n", "\n"
+print "=> ", true_array.my_none? == true_array.none?, "\n", "\n"
 
 # *********************************
 # Running my_count method tests.
@@ -446,8 +458,8 @@ print([].my_map { |num| num * 2 }, "\n", "\n")
 print "array = Array.new(100){rand(0...9)}", "\n", "\n"
 print "block =  proc { |x| x ** 2 }", "\n", "\n"
 print "array.my_map(&block) == array.map(&block)", "\n", "\n"
-array = Array.new(100){rand(0...9)}
-block =  proc { |x| x ** 2 }
+array = Array.new(100) { rand(0...9) }
+block = proc { |x| x ** 2 }
 print "=>", array.my_map(&block) == array.map(&block), "\n", "\n"
 
 # *********************************
