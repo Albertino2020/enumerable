@@ -38,10 +38,10 @@ module Enumerable
   # Beginning of my_each_with_index method.
   # *********************************
   # rubocop: disable Metrics/AbcSize,Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
-  def my_each_with_index(nums = 0)
+  def my_each_with_index(nums = NOTHING)
     checked = {}
     num = nums.is_a?(Integer) && nums >= 1 ? nums : 0
-    unless block_given?
+    unless block_given? || Proc === nums
       return to_enum :my_each_with_index,
                      (print "=>", "No block was given", "\n")
     end
@@ -54,6 +54,8 @@ module Enumerable
           aux[self[i]] = yield self[i], i
         end
         print aux, "\n" unless aux.empty?
+      elsif Proc === nums
+        checked[self[index]] = nums.call(self[index], index) unless self[index].nil?
       else
         checked[self[index]] = yield self[index], index unless self[index].nil?
       end
