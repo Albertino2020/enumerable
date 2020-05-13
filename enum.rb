@@ -118,12 +118,14 @@ module Enumerable
   # Beginning of my_any? method.
   # *********************************
   # rubocop: disable Style/CaseEquality, Layout/EndAlignment
-  def my_any?(arg = nil)
+  def my_any?(arg = NOTHING)
     temp = false
     0.upto(length - 1) do |index|
       temp ||= if block_given?
           yield(self[index])
-        else
+      elsif arg == NOTHING
+        true unless self[index].nil? || self[index] == false
+      else
           (arg === self[index])
         end
     end
@@ -394,6 +396,10 @@ print("[].my_any?", "\n", "\n")
 print([].my_any?, "\n", "\n")
 print("[1, 2, 3, 4, 5].my_any?(Integer)", "\n", "\n")
 print([1, 2, 3, 4, 5].my_any?(Integer), "\n", "\n")
+print "true_array = [nil, false, true, []]", "\n", "\n"
+true_array = [nil, false, true, []], "\n", "\n"
+print "true_array.my_any? == true_array.any?", "\n", "\n"
+print "=> ", true_array.my_any? == true_array.any?, "\n", "\n"
 
 # *********************************
 # Running my_none? method tests.
