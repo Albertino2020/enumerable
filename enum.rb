@@ -7,14 +7,11 @@ module Enumerable
   # Beginning of my_each method.
   # *********************************
   # rubocop: disable Metrics/AbcSize,Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
-  def my_each(nums = 0)
+  def my_each(nums = NOTHING)
+    return to_enum :my_each unless Integer === nums || block_given?
+    (return nil, print("=>", "Array is empty", "\n")) if empty?
     checked = []
     num = nums.is_a?(Integer) && nums >= 1 ? nums : 0
-    unless block_given?
-      (return to_enum :my_each, (print "=>", "No block was given", "\n"))
-    end
-    (return nil, print("=>", "Array is empty", "\n")) if empty?
-
     0.upto(length - num) do |index|
       if num.is_a?(Integer) && num >= 1
         aux = []
@@ -333,6 +330,9 @@ print "\n", "\n"
 print "[1, 2, 3, 4, 5].my_each { |num| num * 2 }", "\n", "\n"
 [1, 2, 3, 4, 5].my_each { |num| num * 2 }
 print "\n", "\n"
+print "array = Array.new(100) { rand(0...9) }", "\n", "\n"
+array = Array.new(100) { rand(0...9) }, "\n", "\n"
+print "=> ", "array.my_each == ", array.my_each, "\n", "\n"
 # ***************************************
 # Running my_each_with_index method tests.
 # ***************************************
