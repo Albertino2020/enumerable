@@ -52,13 +52,7 @@ module Enumerable
   end
 
   # rubocop: enable Layout/EndAlignment, Style/CaseEquality, Metrics/MethodLength
-  # *********************************
-  # End of my_all? method.
-  # *********************************
 
-  # *********************************
-  # Beginning of my_any? method.
-  # *********************************
   # rubocop: disable Style/CaseEquality, Layout/EndAlignment, Metrics/MethodLength
   def my_any?(arg = NOTHING)
     temp = false
@@ -66,7 +60,7 @@ module Enumerable
       temp ||= if block_given?
           yield(self[index])
         elsif arg == NOTHING
-          true unless self[index].nil? || self[index] == false
+          !(self[index].nil? || self[index] == false)
         else
           (arg === self[index])
         end
@@ -257,9 +251,9 @@ end
 # XXXXXX #
 # XX #
 #
-print [1, 2, 3].my_all? #should return true
-print [1, 2, nil].my_all? #should return false
-print [1, false, nil].my_all? #should return false
+print [1, 2, 3].my_any? #should return true
+print [1, 2, nil].my_any? #should return true
+print [false, false, nil].my_any? #should return false
 # *********************************
 # Running my_each method tests.
 # *********************************
