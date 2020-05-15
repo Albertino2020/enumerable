@@ -69,13 +69,7 @@ module Enumerable
   end
 
   # rubocop: enable Style/CaseEquality, Layout/EndAlignment, Metrics/MethodLength
-  # *********************************
-  # End of my_any? method.
-  # *********************************
 
-  # *********************************
-  # Beginning of my_none? method.
-  # *********************************
   # rubocop: disable Style/CaseEquality, Layout/EndAlignment, Metrics/MethodLength
   def my_none?(pat = NOTHING)
     temp = true
@@ -92,15 +86,9 @@ module Enumerable
   end
 
   # rubocop: enable Style/CaseEquality, Layout/EndAlignment, Metrics/MethodLength
-  # *********************************
-  # End of my_none? method.
-  # *********************************
-
-  # *************************(********
-  # Beginning of my_count method.
-  # *********************************
-  # rubocop: disable Style/CaseEquality
-  NOTHING = Object.new
+  *
+ # rubocop: disable Style/CaseEquality
+    NOTHING = Object.new
 
   def my_count(arg = NOTHING)
     if block_given?
@@ -112,17 +100,24 @@ module Enumerable
 
   # rubocop: enable Style/CaseEquality
 
-  # *********************************
-  # End of my_count method.
-  # *********************************
+  def my_map(proc = nil)
+    return to_enum :my_map unless block_given?
+    if proc
+      return self.my_map_proc(proc)
+    end
+    self.my_map_pb(&Proc.new)
+  end
 
-  # *********************************
-  # Beginning of my_map method.
-  # *********************************
-  def my_map
+  def my_map_proc(proc)
     mapped = []
-    return to_enum :my_map, print(" No block was given.") unless block_given?
+    0.upto(length - 1) do |index|
+      mapped.push(proc.call(self[index]))
+    end
+    mapped
+  end
 
+  def my_map_pb
+    mapped = []
     0.upto(length - 1) do |index|
       mapped.push(yield self[index])
     end
@@ -130,59 +125,6 @@ module Enumerable
   end
 
   # rubocop: enable, Metrics/PerceivedComplexity
-
-  # *********************************
-  # End of my_map method.
-  # *********************************
-
-  # *********************************
-  # Beginning of my_map with proc method.
-  # *********************************
-  # rubocop: disable Layout/LineLength, Style/CaseEquality
-  def my_map_proc(procs = NOTHING)
-    mapped = []
-    unless Proc === procs
-      return to_enum :my_map_proc, print("Please enter a valid proc.", "\n", "\n")
-    end
-
-    0.upto(length - 1) do |index|
-      mapped.push(procs.call(self[index]))
-    end
-    mapped
-  end
-
-  # rubocop: enable Layout/LineLength, Style/CaseEquality
-
-  # *********************************
-  # End of my_map with proc method.
-  # *********************************
-
-  # *********************************
-  # Beginning of my_map_pb method
-  # *********************************
-
-  # rubocop: disable Metrics/AbcSize, Layout/LineLength, Style/CaseEquality
-  def my_map_pb(procs = NOTHING)
-    mapped = []
-    unless Proc === procs || block_given?
-      return to_enum :my_map_pb, print("Kindly enter a valid proc or block", "\n", "\n")
-    end
-
-    0.upto(length - 1) do |index|
-      mapped.push(procs.call(self[index])) if Proc === procs
-      mapped.push(yield self[index]) if block_given? && !Proc === procs
-    end
-    mapped
-  end
-
-  # rubocop: enable Metrics/AbcSize, Layout/LineLength, Style/CaseEquality
-  # *********************************
-  # End of my_map_pb method.
-  # *********************************
-
-  # *********************************
-  # Beginning of my_inject method.
-  # *********************************
 
   # rubocop: disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength, Layout/LineLength
   def my_inject(*args)
@@ -252,7 +194,7 @@ end
 # XX #
 #
 print [false, nil, false].my_none? #should return true
-print [1, 'demo', 2.2].my_none? #should return false
+print [1, "demo", 2.2].my_none? #should return false
 # *********************************
 # Running my_each method tests.
 # *********************************
