@@ -12,63 +12,30 @@ module Enumerable
     self
   end
 
-  # rubocop: enable Metrics/ModuleLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity, Style/CaseEquality:
-  # *********************************
-  # End of my_each method.
-  # *********************************
-
-  # *********************************
-  # Beginning of my_each_with_index method.
-  # *********************************
   def my_each_with_index(_block = NOTHING)
     unless block_given?
-      return to_enum :my_each_with_index,
-                     (print "=>", "No block was given", "\n")
+      return to_enum :my_each_with_index
     end
-
     0.upto(length - 1) do |index|
       yield self[index], index
-      #   checked[self[index]] = self.call(self[index], index)
-      # end
     end
     self
   end
 
-  # rubocop:enable:
-
-  # *********************************
-  # End of my_each_with_index method.
-  # *********************************
-
-  # *********************************
-  # Beginning of my_select method.
-  # *********************************
   # rubocop:disable Metrics/MethodLength
   def my_select
     arr = []
     unless block_given?
-      return to_enum :my_select, print("No block was given.", "\n", "\n")
+      return to_enum :my_select
     end
-
-    if !empty?
-      0.upto(length - 1) do |index|
-        arr.push(self[index]) if yield(self[index])
-      end
-    else
-      print "=> ", "Array is empty.", "\n", "\n"
+    0.upto(length - 1) do |index|
+      arr.push(self[index]) if yield(self[index])
     end
-    print("=> ", arr, "\n", "\n") unless arr.empty?
     arr
   end
 
   # rubocop: enable Metrics/MethodLength
-  # *********************************
-  # End of my_select method.
-  # *********************************
 
-  # *********************************
-  # Beginning of my_all method.
-  # *********************************
   # rubocop: disable Layout/EndAlignment, Style/CaseEquality, Metrics/MethodLength
   def my_all?(arg = NOTHING)
     temp = true
@@ -290,8 +257,8 @@ end
 # XXXXXX #
 # XX #
 #
-a = [ "a", "b", "c" ]
-a.my_each {|x| print x, " -- " }
+a = ["a", "b", "c"]
+a.my_each { |x| print x, " -- " }
 # *********************************
 # Running my_each method tests.
 # *********************************
