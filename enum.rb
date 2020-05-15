@@ -33,6 +33,7 @@ module Enumerable
     arr
   end
 
+  # rubocop: disable Metrics/MethodLength, Style/CaseEquality, Layout/EndAlignment
   def my_all?(arg = NOTHING)
     temp = true
     0.upto(length - 1) do |index|
@@ -47,7 +48,8 @@ module Enumerable
     temp
   end
 
-  # rubocop: enable Metrics/ModuleLength
+  # rubocop: enable Metrics/MethodLength, Style/CaseEquality, Layout/EndAlignment
+  # rubocop: disable Style/CaseEquality, Layout/EndAlignment, Metrics/MethodLength
   def my_any?(arg = NOTHING)
     temp = false
     0.upto(length - 1) do |index|
@@ -62,6 +64,8 @@ module Enumerable
     temp
   end
 
+  # rubocop: enable Style/CaseEquality, Layout/EndAlignment, Metrics/MethodLength
+  # rubocop: disable Style/CaseEquality, Layout/EndAlignment, Metrics/MethodLength
   def my_none?(pat = NOTHING)
     temp = true
     0.upto(length - 1) do |index|
@@ -76,6 +80,8 @@ module Enumerable
     temp
   end
 
+  # rubocop: enable Style/CaseEquality, Layout/EndAlignment, Metrics/MethodLength
+  # rubocop: disable Style/CaseEquality
   def my_count(arg = NOTHING)
     if block_given?
       my_select { |index| yield index }.length
@@ -84,6 +90,7 @@ module Enumerable
     end
   end
 
+  # rubocop: enable Style/CaseEquality
   def my_map(proc = nil)
     return to_enum :my_map unless block_given?
     return my_map_proc(proc) if proc
@@ -107,7 +114,7 @@ module Enumerable
     mapped
   end
 
-  # rubocop: disable, Metrics/PerceivedComplexity, Metrics/ModuleLength
+  # rubocop: disable Metrics/BlockNesting, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength, Metrics/AbcSize
   def my_inject(*args)
     input_arr = is_a?(Array) ? self : to_a
     unless input_arr.nil?
@@ -142,10 +149,14 @@ module Enumerable
     end
     accumulator
   end
+  # rubocop: enable Metrics/BlockNesting, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/ModuleLength, Metrics/AbcSize
 end
 
+# rubocop: disable Style/CaseEquality
 def multiply_els(arr = [])
   return arr.my_inject(1, :*) if Array === arr
 
   nil unless Array === arr
 end
+
+# rubocop: enable Style/CaseEquality
