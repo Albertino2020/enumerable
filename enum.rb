@@ -83,7 +83,7 @@ module Enumerable
       temp &&= if block_given?
           !yield(self[index])
         elsif pat == NOTHING
-          false unless self[index].nil? || self[index] == true
+          !self[index]
         else
           !(pat === self[index])
         end
@@ -251,9 +251,8 @@ end
 # XXXXXX #
 # XX #
 #
-print [1, 2, 3].my_any? #should return true
-print [1, 2, nil].my_any? #should return true
-print [false, false, nil].my_any? #should return false
+print [false, nil, false].my_none? #should return true
+print [1, 'demo', 2.2].my_none? #should return false
 # *********************************
 # Running my_each method tests.
 # *********************************
