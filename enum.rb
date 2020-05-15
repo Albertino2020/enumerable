@@ -43,7 +43,7 @@ module Enumerable
       temp &&= if block_given?
           yield(self[index])
         elsif arg == NOTHING
-          true unless self[index].nil? || self[index] == false
+          !(self[index].nil? || self[index] == false)
         else
           (arg === self[index])
         end
@@ -257,8 +257,9 @@ end
 # XXXXXX #
 # XX #
 #
-a = ["a", "b", "c"]
-a.my_each { |x| print x, " -- " }
+print [1, 2, 3].my_all? #should return true
+print [1, 2, nil].my_all? #should return false
+print [1, false, nil].my_all? #should return false
 # *********************************
 # Running my_each method tests.
 # *********************************
