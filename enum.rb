@@ -118,43 +118,38 @@ module Enumerable
     mapped
   end
 
-  # rubocop: disable Metrics/BlockNesting, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength, Metrics/AbcSize
+  # rubocop: disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength, Metrics/AbcSize
   def my_inject(*args)
     input_arr = is_a?(Array) ? self : to_a
     unless input_arr.nil?
       if block_given?
-        if args.size == 1
-          accumulator = args[0]
-        elsif args.empty?
-          unless input_arr.empty?
-            accumulator = input_arr[0]
-            input_arr.shift
-          end
-        end
+        input_arr.unshift(args[0]) if args.size == 1
       elsif args.size == 2
-        accumulator = args[0]
+        input_arr.unshift(args[0])
         @operator = args[1]
       elsif args.size == 1
-        @operator = args[0] if args[0].is_a?(Symbol) || args[0].is_a?(String)
-        unless input_arr.empty?
-          accumulator = input_arr[0]
-          input_arr.shift
-        end
+        @operator = args[0]
       end
+      accumulator = input_arr[0]
     end
+
     0.upto(input_arr.size - 1) do |index|
       if block_given?
-        accumulator = yield(accumulator, input_arr[index])
-      elsif @operator.is_a?(Proc)
-        accumulator = @operator.call(accumulator, input_arr[index])
+        accumulator = yield(accumulator, input_arr[index * 1]) if index > 0
       elsif !@operator.nil?
-        accumulator = input_arr[index].send(@operator, accumulator)
+        if args.size == 1
+          if index > 0
+            accumulator = accumulator.send(@operator, input_arr[index])
+          end
+        else
+          accumulator = accumulator.send(@operator, input_arr[index])
+        end
       end
     end
     accumulator
   end
 
-  # rubocop: enable Metrics/BlockNesting, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/ModuleLength, Metrics/AbcSize
+  # rubocop: enable Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/ModuleLength, Metrics/AbcSize
 end
 
 # rubocop: disable Style/CaseEquality
@@ -165,3 +160,17 @@ def multiply_els(arr = [])
 end
 
 # rubocop: enable Style/CaseEquality
+ARRAY_SIZE = 10
+LOWEST_VALUE = 1
+HIGHEST_VALUE = 20
+array = Array.new(ARRAY_SIZE) { rand(LOWEST_VALUE...HIGHEST_VALUE) }
+word = %i[cat dog bird blade]
+p array
+p array.my_inject { |acc, num| acc + num }
+p array.inject { |acc, num| acc + num }
+p array.my_inject(:+)
+p array.inject(:+)
+p array.my_inject(2, :+)
+p array.inject(2, :+)
+p word.my_inject { |memo, word| memo.length > word.length ? memo : word }
+p word.inject { |memo, word| memo.length > word.length ? memo : word }
