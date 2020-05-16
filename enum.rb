@@ -100,17 +100,21 @@ module Enumerable
 
   def my_map_proc(proc)
     mapped = []
-    0.upto(length - 1) do |index|
-      mapped.push(proc.call(self[index]))
+    input_arr = is_a?(Array) ? self : to_a
+    0.upto(input_arr.length - 1) do |index|
+      mapped.push(proc.call(input_arr[index]))
     end
+
     mapped
   end
 
   def my_map_pb
     mapped = []
-    0.upto(length - 1) do |index|
-      mapped.push(yield self[index])
+    input_arr = is_a?(Array) ? self : to_a
+    0.upto(input_arr.length - 1) do |index|
+      mapped.push(yield input_arr[index])
     end
+
     mapped
   end
 
@@ -149,6 +153,7 @@ module Enumerable
     end
     accumulator
   end
+
   # rubocop: enable Metrics/BlockNesting, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/ModuleLength, Metrics/AbcSize
 end
 
@@ -160,3 +165,4 @@ def multiply_els(arr = [])
 end
 
 # rubocop: enable Style/CaseEquality
+print((1..4).my_map { |i| i * i })
