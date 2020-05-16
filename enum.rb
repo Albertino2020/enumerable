@@ -165,4 +165,3 @@ def multiply_els(arr = [])
 end
 
 # rubocop: enable Style/CaseEquality
-print((1..4).my_map { |i| i * i })
