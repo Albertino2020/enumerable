@@ -135,16 +135,16 @@ module Enumerable
 
     0.upto(input_arr.size - 1) do |index|
       if block_given?
-        if index.positive?
-          accumulator = yield(accumulator, input_arr[index * 1])
-        end
+        accumulator = yield(accumulator, input_arr[index]) if index.positive?
       elsif !@operator.nil?
         if args.size == 1
           if index.positive?
             accumulator = accumulator.send(@operator, input_arr[index])
           end
         else
-          accumulator = accumulator.send(@operator, input_arr[index])
+          unless index == (input_arr.size - 1)
+            accumulator = accumulator.send(@operator, input_arr[index + 1])
+          end
         end
       end
     end
