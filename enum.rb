@@ -37,13 +37,13 @@ module Enumerable
   def my_all?(arg = NOTHING)
     temp = true
     0.upto(length - 1) do |index|
-      temp &&= if block_given?
+      temp &&= (if block_given?
                  yield(self[index])
                elsif arg == NOTHING
                  !(self[index].nil? || self[index] == false)
                else
                  (arg === self[index])
-        end
+        end)
     end
     temp
   end
