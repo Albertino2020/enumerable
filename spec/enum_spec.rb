@@ -29,4 +29,23 @@ describe Enumerable do
       end
     end
   end
+
+  describe '#my_select' do
+    context 'If a block is not given' do
+      it 'returns enumerable' do
+        expect(arr.my_select).to be_kind_of(Enumerator)
+      end
+    end
+    context 'if a block is given' do
+      it 'returns even elements' do
+        expect(arr.my_select { |x| x % 2 == 0 }).to eql([2, 4, 6])
+      end
+      it 'returns odd elements' do
+        expect(arr.my_select { |x| x % 2 != 0 }).to eql([1, 3, 5])
+      end
+      it 'returns the array of elements whose square are less than 10' do
+        expect(arr.my_select { |x| x ** 2 < 10 }).to eql([1, 2, 3])
+      end
+    end
+  end
 end
