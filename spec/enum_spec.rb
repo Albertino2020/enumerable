@@ -10,7 +10,7 @@ describe Enumerable do
 
   describe '#my_each' do
     context 'If a block is not given' do
-      it 'returns enumerable' do
+      it 'returns Enumerator' do
         expect(arr.my_each).to be_kind_of(Enumerator)
       end
     end
@@ -23,7 +23,7 @@ describe Enumerable do
 
   describe '#my_each_with_index' do
     context 'If a block is not given' do
-      it 'returns enumerable' do
+      it 'returns Enumerator' do
         expect(arr.my_each_with_index).to be_kind_of(Enumerator)
       end
     end
@@ -36,7 +36,7 @@ describe Enumerable do
 
   describe '#my_select' do
     context 'If a block is not given' do
-      it 'returns enumerable' do
+      it 'returns Enumerator' do
         expect(arr.my_select).to be_kind_of(Enumerator)
       end
     end
@@ -149,9 +149,6 @@ describe Enumerable do
     end
   end
 
-
-
-
   describe '#count' do
     context 'if a block is given' do
       it 'returns the number of even elements' do
@@ -177,21 +174,41 @@ describe Enumerable do
       end
     end
 
-
     context 'if a block is not given but an argument is given' do
-        it 'returns the number of the elements in the array that are equal to the argument' do
-          expect(arr.my_count(2)).to eql(1)
-        end
-        it 'returns the number of elements that are nil' do
-          expect(arr2.my_count(nil)).to eql(1)
-        end
-        it 'returns the number of elements that are false' do
-          expect(arr4.my_count(false)).to eql(3)
-        end
-        it 'returns the number of elments equal to the boolean true' do
-          expect([].my_count(true)).to eql(0)
-        end
+      it 'returns the number of the elements in the array that are equal to the argument' do
+        expect(arr.my_count(2)).to eql(1)
       end
+      it 'returns the number of elements that are nil' do
+        expect(arr2.my_count(nil)).to eql(1)
+      end
+      it 'returns the number of elements that are false' do
+        expect(arr4.my_count(false)).to eql(3)
+      end
+      it 'returns the number of elments equal to the boolean true' do
+        expect([].my_count(true)).to eql(0)
+      end
+    end
   end
-  
+
+  describe '#my_map' do
+    context 'If a block is not given' do
+      it 'returns Enumerator' do
+        expect(arr.my_map).to be_kind_of(Enumerator)
+      end
+    end
+    context 'if a block is given' do
+      it 'returns a new array with elements multiplied by 2' do
+        expect(arr.my_map { |x| x * 2 }).to eql([2, 4, 6, 8, 10, 12])
+      end
+      it 'returns a new array with true is element is less that 2, otherwise false' do
+        expect(arr.my_map { |x| x < 2 }).to eql([true, false, false, false, false, false])
+      end
+    end
+    context 'if no block given but a proc is given' do
+      let(:my_proc) { proc { |x| x * 2 } }
+      it 'returns a new array with elements multiplied by 2' do
+        expect(arr.my_map(&my_proc)).to eql([2, 4, 6, 8, 10, 12])
+      end
+    end
+  end
 end
