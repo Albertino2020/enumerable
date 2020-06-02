@@ -148,4 +148,50 @@ describe Enumerable do
       end
     end
   end
+
+
+
+
+  describe '#count' do
+    context 'if a block is given' do
+      it 'returns the number of even elements' do
+        expect(arr.count(&:even?)).to eql(3)
+      end
+      it 'returns the number of elements that are greater than 10' do
+        expect(arr.my_count { |x| x > 10 }).to eql(0)
+      end
+      it 'returns the number of elements that squared are greater than 36' do
+        expect(arr.my_count { |x| x**2 > 36 }).to eql(0)
+      end
+      it 'returns the number of odd elements' do
+        expect([].my_count(&:odd?)).to eql(0)
+      end
+    end
+
+    context 'if a block is not given and not argument' do
+      it 'returns the number of elements of the array' do
+        expect(arr.my_count).to eql(6)
+      end
+      it 'returns 0 if the array is empty' do
+        expect([].my_count).to eql(0)
+      end
+    end
+
+
+    context 'if a block is not given but an argument is given' do
+        it 'returns the number of the elements in the array that are equal to the argument' do
+          expect(arr.my_count(2)).to eql(1)
+        end
+        it 'returns the number of elements that are nil' do
+          expect(arr2.my_count(nil)).to eql(1)
+        end
+        it 'returns the number of elements that are false' do
+          expect(arr4.my_count(false)).to eql(3)
+        end
+        it 'returns the number of elments equal to the boolean true' do
+          expect([].my_count(true)).to eql(0)
+        end
+      end
+  end
+  
 end
