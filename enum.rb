@@ -38,11 +38,11 @@ module Enumerable
     temp = true
     0.upto(length - 1) do |index|
       temp &&= (if block_given?
-                 yield(self[index])
-               elsif arg == NOTHING
-                 !(self[index].nil? || self[index] == false)
-               else
-                 (arg === self[index])
+                  yield(self[index])
+                elsif arg == NOTHING
+                  !(self[index].nil? || self[index] == false)
+                else
+                  (arg === self[index])
         end)
     end
     temp
@@ -138,13 +138,9 @@ module Enumerable
         accumulator = yield(accumulator, input_arr[index]) if index.positive?
       elsif !@operator.nil?
         if args.size == 1
-          if index.positive?
-            accumulator = accumulator.send(@operator, input_arr[index])
-          end
+          accumulator = accumulator.send(@operator, input_arr[index]) if index.positive?
         else
-          unless index == (input_arr.size - 1)
-            accumulator = accumulator.send(@operator, input_arr[index + 1])
-          end
+          accumulator = accumulator.send(@operator, input_arr[index + 1]) unless index == (input_arr.size - 1)
         end
       end
     end

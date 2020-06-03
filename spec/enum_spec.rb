@@ -2,6 +2,8 @@
 
 require './enum.rb'
 
+# rubocop: disable Metrics/BlockLength
+
 describe Enumerable do
   let(:arr) { [1, 2, 3, 4, 5, 6] }
   let(:arr2) { [1, nil, 3, 4, 5, 6] }
@@ -208,7 +210,6 @@ describe Enumerable do
       end
     end
     context 'if no block given but a proc is given' do
-     
       it 'returns a new array with elements multiplied by 2' do
         expect(arr.my_map(&my_proc)).to eql([2, 4, 6, 8, 10, 12])
       end
@@ -268,3 +269,5 @@ describe '#multiply_els' do
     expect(multiply_els(2)).to eql(nil)
   end
 end
+
+# rubocop: enable Metrics/BlockLength
