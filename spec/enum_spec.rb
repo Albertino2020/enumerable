@@ -252,10 +252,13 @@ describe Enumerable do
 end
 
 describe '#multiply_els' do
-  it 'multiplies the elements' do
+  it 'returns the product of given elements' do
     expect(multiply_els([1, 2, 3])).to eql(6)
   end
-  it 'multiplies the elements' do
+  it 'returns nil if the given array is empty' do
+    expect(multiply_els([])).to eql(nil)
+  end
+  it 'returns nil if the argument is not an array.' do
     expect(multiply_els(2)).to eql(nil)
   end
 end

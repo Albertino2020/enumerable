@@ -155,8 +155,8 @@ module Enumerable
 end
 
 # rubocop: disable Style/CaseEquality
-def multiply_els(arr = [])
-  return arr.my_inject(1, :*) if Array === arr
+def multiply_els(arr = NOTHING)
+  return arr.my_inject(:*) if Array === arr
 
   nil unless Array === arr
 end
