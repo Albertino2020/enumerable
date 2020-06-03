@@ -9,6 +9,10 @@ The project contains descriptions and comments for all methods implemented, as w
 ## Built With
 
 - Ruby
+- VS Code
+- RSpec
+- Git
+- GitHub
 
 ## Live Demo
 
@@ -22,6 +26,14 @@ The project contains descriptions and comments for all methods implemented, as w
 - Github: [@Albertino2020](https://github.com/Albertino2020)
 - Twitter: [@albertino2050](https://twitter.com/albertino2050)
 - Linkedin: [Albertino Francisco, PhD](https://linkedin.com/boamorte)
+
+## Contributor
+
+👤 Mupa M'mbetsa Nzaphila
+
+- Github: [@Mupa1](https://github.com/Mupa1)
+- Twitter: [@mupa_mmbetsa](https://twitter.com/mupa_mmbetsa)
+- Linkedin: [Mupa M'mbetsa Nzaphila](https://linkedin.com/mupa-mmbetsa)
 
 ## 🤝 Contributing
 
