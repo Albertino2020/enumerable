@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 #:nodoc:
 # rubocop: disable Metrics/ModuleLength
 module Enumerable
@@ -33,7 +31,7 @@ module Enumerable
     arr
   end
 
-  # rubocop: disable Metrics/MethodLength, Style/CaseEquality, Layout/EndAlignment
+  # rubocop: disable Style/CaseEquality, Layout/EndAlignment
   def my_all?(arg = NOTHING)
     temp = true
     0.upto(length - 1) do |index|
@@ -48,8 +46,8 @@ module Enumerable
     temp
   end
 
-  # rubocop: enable Metrics/MethodLength, Style/CaseEquality, Layout/EndAlignment
-  # rubocop: disable Style/CaseEquality, Layout/EndAlignment, Metrics/MethodLength
+  # rubocop: enable Style/CaseEquality, Layout/EndAlignment
+  # rubocop: disable Style/CaseEquality, Layout/EndAlignment
   def my_any?(arg = NOTHING)
     temp = false
     0.upto(length - 1) do |index|
@@ -64,8 +62,8 @@ module Enumerable
     temp
   end
 
-  # rubocop: enable Style/CaseEquality, Layout/EndAlignment, Metrics/MethodLength
-  # rubocop: disable Style/CaseEquality, Layout/EndAlignment, Metrics/MethodLength
+  # rubocop: enable Style/CaseEquality, Layout/EndAlignment
+  # rubocop: disable Style/CaseEquality, Layout/EndAlignment
   def my_none?(pat = NOTHING)
     temp = true
     0.upto(length - 1) do |index|
@@ -80,7 +78,7 @@ module Enumerable
     temp
   end
 
-  # rubocop: enable Style/CaseEquality, Layout/EndAlignment, Metrics/MethodLength
+  # rubocop: enable Style/CaseEquality, Layout/EndAlignment
   # rubocop: disable Style/CaseEquality
   def my_count(arg = NOTHING)
     if block_given?
@@ -118,7 +116,7 @@ module Enumerable
     mapped
   end
 
-  # rubocop: disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength, Metrics/AbcSize
+  # rubocop: disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
   def my_inject(*args)
     input_arr = is_a?(Array) ? self : to_a
     unless input_arr.nil?
@@ -147,7 +145,7 @@ module Enumerable
     accumulator
   end
 
-  # rubocop: enable Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/ModuleLength, Metrics/AbcSize
+  # rubocop: enable Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/ModuleLength
 end
 
 # rubocop: disable Style/CaseEquality

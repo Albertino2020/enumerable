@@ -1,8 +1,4 @@
-# frozen_string_literal: true
-
 require './enum.rb'
-
-# rubocop: disable Metrics/BlockLength
 
 describe Enumerable do
   let(:arr) { [1, 2, 3, 4, 5, 6] }
@@ -269,5 +265,3 @@ describe '#multiply_els' do
     expect(multiply_els(2)).to eql(nil)
   end
 end
-
-# rubocop: enable Metrics/BlockLength
