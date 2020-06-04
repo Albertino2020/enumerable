@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 #:nodoc:
 # rubocop: disable Metrics/ModuleLength
 module Enumerable
@@ -33,23 +31,23 @@ module Enumerable
     arr
   end
 
-  # rubocop: disable Metrics/MethodLength, Style/CaseEquality, Layout/EndAlignment
+  # rubocop: disable Style/CaseEquality, Layout/EndAlignment
   def my_all?(arg = NOTHING)
     temp = true
     0.upto(length - 1) do |index|
-      temp &&= if block_given?
-                 yield(self[index])
-               elsif arg == NOTHING
-                 !(self[index].nil? || self[index] == false)
-               else
-                 (arg === self[index])
-        end
+      temp &&= (if block_given?
+                  yield(self[index])
+                elsif arg == NOTHING
+                  !(self[index].nil? || self[index] == false)
+                else
+                  (arg === self[index])
+        end)
     end
     temp
   end
 
-  # rubocop: enable Metrics/MethodLength, Style/CaseEquality, Layout/EndAlignment
-  # rubocop: disable Style/CaseEquality, Layout/EndAlignment, Metrics/MethodLength
+  # rubocop: enable Style/CaseEquality, Layout/EndAlignment
+  # rubocop: disable Style/CaseEquality, Layout/EndAlignment
   def my_any?(arg = NOTHING)
     temp = false
     0.upto(length - 1) do |index|
@@ -64,8 +62,8 @@ module Enumerable
     temp
   end
 
-  # rubocop: enable Style/CaseEquality, Layout/EndAlignment, Metrics/MethodLength
-  # rubocop: disable Style/CaseEquality, Layout/EndAlignment, Metrics/MethodLength
+  # rubocop: enable Style/CaseEquality, Layout/EndAlignment
+  # rubocop: disable Style/CaseEquality, Layout/EndAlignment
   def my_none?(pat = NOTHING)
     temp = true
     0.upto(length - 1) do |index|
@@ -80,7 +78,7 @@ module Enumerable
     temp
   end
 
-  # rubocop: enable Style/CaseEquality, Layout/EndAlignment, Metrics/MethodLength
+  # rubocop: enable Style/CaseEquality, Layout/EndAlignment
   # rubocop: disable Style/CaseEquality
   def my_count(arg = NOTHING)
     if block_given?
@@ -118,7 +116,7 @@ module Enumerable
     mapped
   end
 
-  # rubocop: disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength, Metrics/AbcSize
+  # rubocop: disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
   def my_inject(*args)
     input_arr = is_a?(Array) ? self : to_a
     unless input_arr.nil?
@@ -138,25 +136,21 @@ module Enumerable
         accumulator = yield(accumulator, input_arr[index]) if index.positive?
       elsif !@operator.nil?
         if args.size == 1
-          if index.positive?
-            accumulator = accumulator.send(@operator, input_arr[index])
-          end
+          accumulator = accumulator.send(@operator, input_arr[index]) if index.positive?
         else
-          unless index == (input_arr.size - 1)
-            accumulator = accumulator.send(@operator, input_arr[index + 1])
-          end
+          accumulator = accumulator.send(@operator, input_arr[index + 1]) unless index == (input_arr.size - 1)
         end
       end
     end
     accumulator
   end
 
-  # rubocop: enable Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/ModuleLength, Metrics/AbcSize
+  # rubocop: enable Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/ModuleLength
 end
 
 # rubocop: disable Style/CaseEquality
-def multiply_els(arr = [])
-  return arr.my_inject(1, :*) if Array === arr
+def multiply_els(arr = NOTHING)
+  return arr.my_inject(:*) if Array === arr
 
   nil unless Array === arr
 end
